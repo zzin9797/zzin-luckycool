@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zinin | 成长日志</title>
+  <meta id="meta-description" name="description" content="成长日志首篇：我想慢慢走出原来的圈子，去看看更大的世界。" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f4efe7;
+      --panel: rgba(255, 252, 247, 0.74);
+      --text: #1d1b19;
+      --muted: #6a6259;
+      --line: rgba(29, 27, 25, 0.12);
+      --accent: #26453f;
+      --shadow: 0 20px 60px rgba(41, 35, 28, 0.08);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Manrope", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(255, 255, 255, 0.72), transparent 36%),
+        linear-gradient(180deg, #f7f2ea 0%, #f1eae0 42%, #eee6da 100%);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    h1,
+    h2,
+    h3,
+    .font-serif {
+      font-family: "Noto Serif SC", serif;
+    }
+
+    .grain::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+      background-size: 28px 28px;
+      opacity: 0.25;
+      mix-blend-mode: soft-light;
+    }
+
+    .glass-panel {
+      background: var(--panel);
+      border: 1px solid rgba(255, 255, 255, 0.58);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+    }
+
+    .section-label {
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-size: 0.72rem;
+    }
+
+    .lang-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.15rem;
+      padding: 0.2rem;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.68);
+    }
+
+    .lang-toggle button {
+      min-width: 2.7rem;
+      padding: 0.5rem 0.8rem;
+      border: 0;
+      border-radius: 999px;
+      background: transparent;
+      color: var(--muted);
+      font-size: 0.8rem;
+      line-height: 1;
+      transition: background-color 180ms ease, color 180ms ease;
+    }
+
+    .lang-toggle button.is-active {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .article-visual {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.64);
+      border-radius: 2rem;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.52), rgba(214, 202, 189, 0.72));
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.58),
+        inset 0 -24px 48px rgba(67, 58, 47, 0.08),
+        0 14px 30px rgba(52, 45, 37, 0.08);
+    }
+
+    .article-visual::before,
+    .article-visual::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .article-visual::before {
+      background:
+        radial-gradient(circle at 18% 16%, rgba(255, 255, 255, 0.54), transparent 28%),
+        radial-gradient(circle at 78% 82%, rgba(38, 69, 63, 0.12), transparent 34%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 42%);
+      opacity: 0.95;
+    }
+
+    .article-visual::after {
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent 26%, rgba(29, 27, 25, 0.12) 100%),
+        repeating-linear-gradient(
+          0deg,
+          rgba(255, 255, 255, 0.035),
+          rgba(255, 255, 255, 0.035) 2px,
+          transparent 2px,
+          transparent 4px
+        );
+      mix-blend-mode: soft-light;
+    }
+
+    .article-visual svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      filter: saturate(0.88) contrast(0.97) brightness(1.02);
+    }
+
+    .article-visual__note {
+      position: absolute;
+      inset: auto 1rem 1rem auto;
+      max-width: 14rem;
+      padding: 0.9rem 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.58);
+      border-radius: 1rem;
+      background: rgba(247, 242, 234, 0.76);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 10px 24px rgba(52, 45, 37, 0.08);
+    }
+
+    .article-body p {
+      font-size: 1.05rem;
+      line-height: 2;
+      color: var(--text);
+    }
+
+    .article-body p + p {
+      margin-top: 1.4rem;
+    }
+
+    .pull-quote {
+      border-left: 1px solid rgba(38, 69, 63, 0.22);
+      padding-left: 1.4rem;
+      color: var(--accent);
+    }
+
+    .meta-card {
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.34);
+    }
+  </style>
+</head>
+<body class="grain antialiased">
+  <div class="mx-auto max-w-6xl px-6 pb-24 pt-6 sm:px-8 lg:px-12">
+    <header class="glass-panel sticky top-4 z-20 rounded-full px-5 py-4 sm:px-7">
+      <div class="flex items-center justify-between gap-4">
+        <a href="./index.html" class="text-sm font-semibold uppercase tracking-[0.28em] text-[var(--accent)]">Zinin</a>
+        <div class="flex items-center gap-3">
+          <div class="lang-toggle" aria-label="Language switcher">
+            <button type="button" data-lang-select="zh" class="is-active">中</button>
+            <button type="button" data-lang-select="en">EN</button>
+          </div>
+          <a href="./index.html#works" class="rounded-full border border-[var(--line)] bg-white/70 px-4 py-2 text-sm text-[var(--text)] transition hover:border-[var(--accent)] hover:text-[var(--accent)]" data-i18n="nav.back">返回首页</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="pt-12 lg:pt-16">
+      <nav class="mb-8 flex flex-wrap items-center gap-3 text-sm text-[var(--muted)]">
+        <a href="./index.html" class="transition hover:text-[var(--accent)]" data-i18n="crumb.home">首页</a>
+        <span>/</span>
+        <a href="./index.html#works" class="transition hover:text-[var(--accent)]" data-i18n="crumb.columns">栏目</a>
+        <span>/</span>
+        <span data-i18n="crumb.current">成长日志</span>
+      </nav>
+
+      <section class="grid gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:items-end">
+        <div class="space-y-7">
+          <p class="section-label" data-i18n="article.label">成长日志 / 首篇</p>
+          <h1 class="max-w-3xl text-[3rem] font-semibold leading-[1.08] sm:text-[4rem] lg:text-[4.7rem]" data-i18n-html="article.title">我想慢慢走出原来的圈子，<span class="block italic text-[var(--accent)]">去看看更大的世界。</span></h1>
+          <p class="max-w-2xl text-base leading-8 text-[var(--muted)]" data-i18n="article.intro">这一篇更像写给自己的一个提醒。为什么我开始想离开那种熟悉却封闭的感觉，又为什么想让自己慢一点、远一点，去靠近新的世界。</p>
+          <div class="grid gap-4 sm:grid-cols-3">
+            <div class="meta-card rounded-[1.4rem] p-5">
+              <p class="section-label" data-i18n="meta.1.label">状态</p>
+              <p class="mt-3 text-base text-[var(--text)]" data-i18n="meta.1.value">正在改变</p>
+            </div>
+            <div class="meta-card rounded-[1.4rem] p-5">
+              <p class="section-label" data-i18n="meta.2.label">关键词</p>
+              <p class="mt-3 text-base text-[var(--text)]" data-i18n="meta.2.value">离开、靠近、打开</p>
+            </div>
+            <div class="meta-card rounded-[1.4rem] p-5">
+              <p class="section-label" data-i18n="meta.3.label">记录方式</p>
+              <p class="mt-3 text-base text-[var(--text)]" data-i18n="meta.3.value">边感受边整理</p>
+            </div>
+          </div>
+        </div>
+
+        <figure class="article-visual">
+          <svg viewBox="0 0 1200 900" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <linearGradient id="growth-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#f6efe7" />
+                <stop offset="52%" stop-color="#d8c9b8" />
+                <stop offset="100%" stop-color="#72827c" />
+              </linearGradient>
+              <filter id="growth-blur" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="24" />
+              </filter>
+            </defs>
+            <rect width="1200" height="900" fill="url(#growth-bg)" />
+            <ellipse cx="880" cy="180" rx="220" ry="130" fill="#fffaf4" opacity="0.4" filter="url(#growth-blur)" />
+            <path d="M0 650C164 540 302 478 448 448C624 412 818 450 1200 620V900H0V650Z" fill="#6f7e78" opacity="0.34" />
+            <path d="M0 720C170 632 326 592 474 586C654 580 850 634 1200 804V900H0V720Z" fill="#455b55" opacity="0.54" />
+            <rect x="176" y="170" width="154" height="382" rx="78" fill="#efe5d8" opacity="0.82" />
+            <circle cx="254" cy="220" r="62" fill="#d4c5b5" opacity="0.98" />
+            <path d="M176 374C176 318 222 274 278 274C334 274 380 320 380 376V566H176V374Z" fill="#314841" opacity="0.56" />
+            <path d="M152 580C188 542 226 516 274 494C320 516 360 544 400 586" fill="#d7c9b9" opacity="0.5" />
+            <rect x="680" y="128" width="208" height="294" rx="22" transform="rotate(-8 680 128)" fill="#f8f4ee" opacity="0.94" />
+            <rect x="724" y="186" width="118" height="10" rx="5" transform="rotate(-8 724 186)" fill="#8d7d6d" opacity="0.28" />
+            <rect x="724" y="228" width="148" height="10" rx="5" transform="rotate(-8 724 228)" fill="#8d7d6d" opacity="0.18" />
+            <path d="M562 494C660 436 758 398 876 384" stroke="#f7f1ea" stroke-width="5" stroke-linecap="round" opacity="0.38" />
+          </svg>
+          <figcaption class="article-visual__note">
+            <p class="section-label" data-i18n="visual.noteLabel">图像注记</p>
+            <p class="mt-3 text-base font-serif leading-7 text-[var(--text)]" data-i18n="visual.noteBody">像站在路上回头看，也像刚刚抬头望向更远一点的地方。</p>
+          </figcaption>
+        </figure>
+      </section>
+
+      <section class="mt-16 grid gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:gap-12">
+        <aside class="space-y-4">
+          <div class="glass-panel rounded-[1.8rem] p-6">
+            <p class="section-label" data-i18n="aside.label">这一篇里</p>
+            <div class="mt-5 space-y-4 text-sm leading-7 text-[var(--muted)]">
+              <p data-i18n="aside.1">想从熟悉里慢慢走出去</p>
+              <p data-i18n="aside.2">想看见更远一点的地方</p>
+              <p data-i18n="aside.3">也想在路上慢慢看见自己</p>
+            </div>
+          </div>
+          <div class="glass-panel rounded-[1.8rem] p-6">
+            <p class="section-label" data-i18n="aside.quoteLabel">一句话</p>
+            <p class="pull-quote mt-5 text-lg font-serif leading-9" data-i18n="aside.quote">我不是忽然变得勇敢，只是开始不想一直停在原地。</p>
+          </div>
+        </aside>
+
+        <article class="glass-panel rounded-[2rem] p-7 sm:p-10 lg:p-12">
+          <div class="article-body max-w-3xl">
+            <p data-i18n="body.1">有些时候，我会觉得自己一直待在一种很熟悉的状态里。它不一定是坏的，甚至因为太熟悉了，会让人觉得安全。但待久了以后，也会慢慢感觉到那种安全背后其实有一点封闭，好像自己的目光、想法，甚至对未来的想象，都停留在差不多的范围里。</p>
+            <p data-i18n="body.2">我开始意识到，自己并不想一直这样下去。不是因为我已经很确定外面的世界有什么，而是因为我越来越想知道，原来生活还可以被怎样理解，原来人也可以怎样一点点改变。那种想离开旧的感觉，不是激烈的，更像一种很轻却持续存在的牵引。</p>
+            <p data-i18n="body.3">对我来说，去看更大的世界，不一定只是地理上的远方，也不只是接触更多的新鲜事。它更像是一种视角的变化：愿意承认自己原来知道得很少，愿意让新的东西进来，也愿意被不同的想法慢慢碰撞、改变。</p>
+            <p data-i18n="body.4">这个过程当然不会一下子就完成。我还是会迟疑，会担心自己走得慢，会害怕走出去之后看见的是自己暂时还不能完全接住的世界。但我想，成长本来就不是突然抵达某个地方，而是一个人愿不愿意一点点打开自己，愿不愿意继续往前走。</p>
+            <p data-i18n="body.5">所以成长日志这个栏目，对我来说并不是用来写“我变得多好了”。它更像是一个地方，让我诚实地记录那些想法是怎样出现的、犹豫是怎样存在的、而我又是怎样在这些复杂感觉里，还是决定往前一点点走。</p>
+            <p data-i18n="body.6">如果这篇要留下什么，大概就是这个念头：我想慢慢走出原来的圈子，不是为了变成别人期待的样子，而是为了让自己真的看见更大的世界，也在那个过程中，更清楚地看见自己。</p>
+          </div>
+        </article>
+      </section>
+
+      <section class="mt-16 flex flex-col gap-6 border-t border-[var(--line)] pt-8">
+        <div class="flex flex-wrap gap-3">
+          <a href="./index.html#works" class="inline-flex rounded-full border border-[var(--line)] px-5 py-3 text-sm font-medium text-[var(--text)] transition hover:border-[var(--accent)] hover:text-[var(--accent)]" data-i18n="footer.backToColumn">回到这个栏目</a>
+          <a href="./index.html" class="inline-flex rounded-full border border-[var(--line)] px-5 py-3 text-sm font-medium text-[var(--text)] transition hover:border-[var(--accent)] hover:text-[var(--accent)]" data-i18n="footer.backHome">回到首页</a>
+        </div>
+
+        <div class="grid gap-4 lg:grid-cols-2">
+          <div>
+            <p class="section-label" data-i18n="footer.label">下一步</p>
+            <p class="mt-3 text-base leading-8 text-[var(--muted)]" data-i18n="footer.body">之后我会继续把那些关于变化、选择和重新认识自己的时刻，慢慢写进这里。</p>
+          </div>
+          <a href="./ai-info-collection-01.html" class="glass-panel rounded-[1.8rem] p-6 transition hover:border-[var(--accent)] hover:text-[var(--accent)]">
+            <p class="section-label" data-i18n="footer.nextLabel">另一条线</p>
+            <h2 class="mt-4 text-2xl font-semibold leading-tight" data-i18n="footer.nextTitle">《我想先把 AI 世界里不断出现的信息，慢慢整理成自己看得懂的线索》</h2>
+            <p class="mt-4 text-sm leading-7 text-[var(--muted)]" data-i18n="footer.nextBody">继续读 AI 信息收集首篇，看看我准备先从哪些线索开始整理这个不断变化的领域。</p>
+          </a>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const translations = {
+      zh: {
+        "meta.title": "Zinin | 成长日志",
+        "meta.description": "成长日志首篇：我想慢慢走出原来的圈子，去看看更大的世界。",
+        "nav.back": "返回首页",
+        "crumb.home": "首页",
+        "crumb.columns": "栏目",
+        "crumb.current": "成长日志",
+        "article.label": "成长日志 / 首篇",
+        "article.title": "我想慢慢走出原来的圈子，<span class=\"block italic text-[var(--accent)]\">去看看更大的世界。</span>",
+        "article.intro": "这一篇更像写给自己的一个提醒。为什么我开始想离开那种熟悉却封闭的感觉，又为什么想让自己慢一点、远一点，去靠近新的世界。",
+        "meta.1.label": "状态",
+        "meta.1.value": "正在改变",
+        "meta.2.label": "关键词",
+        "meta.2.value": "离开、靠近、打开",
+        "meta.3.label": "记录方式",
+        "meta.3.value": "边感受边整理",
+        "visual.noteLabel": "图像注记",
+        "visual.noteBody": "像站在路上回头看，也像刚刚抬头望向更远一点的地方。",
+        "aside.label": "这一篇里",
+        "aside.1": "想从熟悉里慢慢走出去",
+        "aside.2": "想看见更远一点的地方",
+        "aside.3": "也想在路上慢慢看见自己",
+        "aside.quoteLabel": "一句话",
+        "aside.quote": "我不是忽然变得勇敢，只是开始不想一直停在原地。",
+        "body.1": "有些时候，我会觉得自己一直待在一种很熟悉的状态里。它不一定是坏的，甚至因为太熟悉了，会让人觉得安全。但待久了以后，也会慢慢感觉到那种安全背后其实有一点封闭，好像自己的目光、想法，甚至对未来的想象，都停留在差不多的范围里。",
+        "body.2": "我开始意识到，自己并不想一直这样下去。不是因为我已经很确定外面的世界有什么，而是因为我越来越想知道，原来生活还可以被怎样理解，原来人也可以怎样一点点改变。那种想离开旧的感觉，不是激烈的，更像一种很轻却持续存在的牵引。",
+        "body.3": "对我来说，去看更大的世界，不一定只是地理上的远方，也不只是接触更多的新鲜事。它更像是一种视角的变化：愿意承认自己原来知道得很少，愿意让新的东西进来，也愿意被不同的想法慢慢碰撞、改变。",
+        "body.4": "这个过程当然不会一下子就完成。我还是会迟疑，会担心自己走得慢，会害怕走出去之后看见的是自己暂时还不能完全接住的世界。但我想，成长本来就不是突然抵达某个地方，而是一个人愿不愿意一点点打开自己，愿不愿意继续往前走。",
+        "body.5": "所以成长日志这个栏目，对我来说并不是用来写“我变得多好了”。它更像是一个地方，让我诚实地记录那些想法是怎样出现的、犹豫是怎样存在的、而我又是怎样在这些复杂感觉里，还是决定往前一点点走。",
+        "body.6": "如果这篇要留下什么，大概就是这个念头：我想慢慢走出原来的圈子，不是为了变成别人期待的样子，而是为了让自己真的看见更大的世界，也在那个过程中，更清楚地看见自己。",
+        "footer.label": "下一步",
+        "footer.body": "之后我会继续把那些关于变化、选择和重新认识自己的时刻，慢慢写进这里。",
+        "footer.backToColumn": "回到这个栏目",
+        "footer.backHome": "回到首页",
+        "footer.nextLabel": "另一条线",
+        "footer.nextTitle": "《我想先把 AI 世界里不断出现的信息，慢慢整理成自己看得懂的线索》",
+        "footer.nextBody": "继续读 AI 信息收集首篇，看看我准备先从哪些线索开始整理这个不断变化的领域。"
+      },
+      en: {
+        "meta.title": "Zinin | Growth Journal",
+        "meta.description": "First entry in the growth journal: I want to slowly step beyond my old circle and see a wider world.",
+        "nav.back": "Back Home",
+        "crumb.home": "Home",
+        "crumb.columns": "Columns",
+        "crumb.current": "Growth Journal",
+        "article.label": "Growth Journal / First Entry",
+        "article.title": "I want to slowly step beyond my old circle, <span class=\"block italic text-[var(--accent)]\">and see a wider world.</span>",
+        "article.intro": "This piece feels like a reminder to myself. Why I began wanting to leave that familiar but closed feeling behind, and why I want to move a little slower, a little farther, toward a newer world.",
+        "meta.1.label": "Status",
+        "meta.1.value": "In Change",
+        "meta.2.label": "Keywords",
+        "meta.2.value": "Leaving, Nearness, Opening",
+        "meta.3.label": "Method",
+        "meta.3.value": "Feeling While Sorting",
+        "visual.noteLabel": "Visual Note",
+        "visual.noteBody": "Like looking back while standing on the road, and like lifting my head toward somewhere a little farther away.",
+        "aside.label": "In This Entry",
+        "aside.1": "Wanting to step out of the familiar",
+        "aside.2": "Wanting to look a little farther",
+        "aside.3": "And slowly finding myself on the way",
+        "aside.quoteLabel": "One Line",
+        "aside.quote": "I did not suddenly become brave. I simply stopped wanting to remain where I was.",
+        "body.1": "Sometimes I feel that I have stayed inside a very familiar state for a long time. It is not necessarily bad. In fact, because it is so familiar, it can feel safe. But after staying there too long, I begin to sense the closedness hidden behind that safety, as if my gaze, my thoughts, and even my imagination of the future all remain within nearly the same range.",
+        "body.2": "I began to realize that I do not want to remain there forever. Not because I already know what exists outside, but because I increasingly want to understand how life might be seen differently, and how a person might slowly change. That wish to leave the old feeling is not dramatic. It is more like a light but steady pull.",
+        "body.3": "For me, seeing a wider world does not only mean a farther place, or simply meeting more new things. It feels more like a shift in perspective: being willing to admit how little I once knew, letting new things enter, and allowing myself to be quietly changed by different ideas.",
+        "body.4": "Of course, this process does not finish all at once. I still hesitate. I still worry that I move too slowly, or that what I see outside may be more than I can fully hold for now. But I think growth was never about suddenly arriving somewhere. It is about whether a person is willing to open herself little by little, and keep walking forward.",
+        "body.5": "So this Growth Journal is not a place where I write about how much better I have become. It is more a place where I can honestly record how certain thoughts appeared, how hesitation remained, and how I still chose to move forward a little within those complicated feelings.",
+        "body.6": "If this piece leaves anything behind, perhaps it is this thought: I want to slowly step beyond my old circle, not to become what others expect, but to truly see a wider world and, in that process, see myself more clearly too.",
+        "footer.label": "Next",
+        "footer.body": "Later, I will keep writing the moments of change, choice, and self-recognition into this space.",
+        "footer.backToColumn": "Back to This Column",
+        "footer.backHome": "Back Home",
+        "footer.nextLabel": "The Other Line",
+        "footer.nextTitle": "I want to slowly sort the constant flow of AI information into clues I can actually understand.",
+        "footer.nextBody": "Continue into the first AI information-gathering entry, where I begin sorting which signals might help me understand this fast-changing field."
+      }
+    };
+
+    const metaDescription = document.getElementById("meta-description");
+    const languageButtons = document.querySelectorAll("[data-lang-select]");
+
+    function setLanguage(lang) {
+      const dictionary = translations[lang] || translations.zh;
+
+      document.documentElement.lang = lang === "en" ? "en" : "zh-CN";
+      document.title = dictionary["meta.title"];
+      metaDescription.setAttribute("content", dictionary["meta.description"]);
+
+      document.querySelectorAll("[data-i18n]").forEach((node) => {
+        const key = node.getAttribute("data-i18n");
+        if (dictionary[key]) {
+          node.textContent = dictionary[key];
+        }
+      });
+
+      document.querySelectorAll("[data-i18n-html]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-html");
+        if (dictionary[key]) {
+          node.innerHTML = dictionary[key];
+        }
+      });
+
+      languageButtons.forEach((button) => {
+        const isActive = button.getAttribute("data-lang-select") === lang;
+        button.classList.toggle("is-active", isActive);
+        button.setAttribute("aria-pressed", isActive ? "true" : "false");
+      });
+
+      localStorage.setItem("zinin-language", lang);
+    }
+
+    languageButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        setLanguage(button.getAttribute("data-lang-select"));
+      });
+    });
+
+    const savedLanguage = localStorage.getItem("zinin-language");
+    setLanguage(savedLanguage || "zh");
+  </script>
+</body>
+</html>

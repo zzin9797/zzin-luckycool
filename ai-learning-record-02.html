@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zinin | 我的学习过程与感受</title>
+  <meta id="meta-description" name="description" content="我的学习过程与感受第二篇：开始真的去用 AI 之后，我慢慢学着先把问题问清楚。" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f4efe7;
+      --panel: rgba(255, 252, 247, 0.74);
+      --text: #1d1b19;
+      --muted: #6a6259;
+      --line: rgba(29, 27, 25, 0.12);
+      --accent: #26453f;
+      --shadow: 0 20px 60px rgba(41, 35, 28, 0.08);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Manrope", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(255, 255, 255, 0.72), transparent 36%),
+        linear-gradient(180deg, #f7f2ea 0%, #f1eae0 42%, #eee6da 100%);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    h1,
+    h2,
+    h3,
+    .font-serif {
+      font-family: "Noto Serif SC", serif;
+    }
+
+    .grain::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+      background-size: 28px 28px;
+      opacity: 0.25;
+      mix-blend-mode: soft-light;
+    }
+
+    .glass-panel {
+      background: var(--panel);
+      border: 1px solid rgba(255, 255, 255, 0.58);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+    }
+
+    .section-label {
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-size: 0.72rem;
+    }
+
+    .lang-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.15rem;
+      padding: 0.2rem;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.68);
+    }
+
+    .lang-toggle button {
+      min-width: 2.7rem;
+      padding: 0.5rem 0.8rem;
+      border: 0;
+      border-radius: 999px;
+      background: transparent;
+      color: var(--muted);
+      font-size: 0.8rem;
+      line-height: 1;
+      transition: background-color 180ms ease, color 180ms ease;
+    }
+
+    .lang-toggle button.is-active {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .article-visual {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.64);
+      border-radius: 2rem;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.52), rgba(214, 202, 189, 0.72));
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.58),
+        inset 0 -24px 48px rgba(67, 58, 47, 0.08),
+        0 14px 30px rgba(52, 45, 37, 0.08);
+    }
+
+    .article-visual::before,
+    .article-visual::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .article-visual::before {
+      background:
+        radial-gradient(circle at 18% 16%, rgba(255, 255, 255, 0.54), transparent 28%),
+        radial-gradient(circle at 78% 82%, rgba(38, 69, 63, 0.12), transparent 34%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 42%);
+      opacity: 0.95;
+    }
+
+    .article-visual::after {
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent 26%, rgba(29, 27, 25, 0.12) 100%),
+        repeating-linear-gradient(
+          0deg,
+          rgba(255, 255, 255, 0.035),
+          rgba(255, 255, 255, 0.035) 2px,
+          transparent 2px,
+          transparent 4px
+        );
+      mix-blend-mode: soft-light;
+    }
+
+    .article-visual svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      filter: saturate(0.88) contrast(0.97) brightness(1.02);
+    }
+
+    .article-visual__note {
+      position: absolute;
+      inset: auto 1rem 1rem auto;
+      max-width: 14rem;
+      padding: 0.9rem 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.58);
+      border-radius: 1rem;
+      background: rgba(247, 242, 234, 0.76);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 10px 24px rgba(52, 45, 37, 0.08);
+    }
+
+    .article-body p {
+      font-size: 1.05rem;
+      line-height: 2;
+      color: var(--text);
+    }
+
+    .article-body p + p {
+      margin-top: 1.4rem;
+    }
+
+    .pull-quote {
+      border-left: 1px solid rgba(38, 69, 63, 0.22);
+      padding-left: 1.4rem;
+      color: var(--accent);
+    }
+
+    .meta-card {
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.34);
+    }
+  </style>
+</head>
+<body class="grain antialiased">
+  <div class="mx-auto max-w-6xl px-6 pb-24 pt-6 sm:px-8 lg:px-12">
+    <header class="glass-panel sticky top-4 z-20 rounded-full px-5 py-4 sm:px-7">
+      <div class="flex items-center justify-between gap-4">
+        <a href="./index.html" class="text-sm font-semibold uppercase tracking-[0.28em] text-[var(--accent)]">Zinin</a>
+        <div class="flex items-center gap-3">
+          <div class="lang-toggle" aria-label="Language switcher">
+            <button type="button" data-lang-select="zh" class="is-active">中</button>
+            <button type="button" data-lang-select="en">EN</button>
+          </div>
+          <a href="./index.html#works" class="rounded-full border border-[var(--line)] bg-white/70 px-4 py-2 text-sm text-[var(--text)] transition hover:border-[var(--accent)] hover:text-[var(--accent)]" data-i18n="nav.back">返回首页</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="pt-12 lg:pt-16">
+      <nav class="mb-8 flex flex-wrap items-center gap-3 text-sm text-[var(--muted)]">
+        <a href="./index.html" class="transition hover:text-[var(--accent)]" data-i18n="crumb.home">首页</a>
+        <span>/</span>
+        <a href="./index.html#works" class="transition hover:text-[var(--accent)]" data-i18n="crumb.columns">栏目</a>
+        <span>/</span>
+        <span data-i18n="crumb.current">我的学习过程与感受</span>
+      </nav>
+
+      <section class="grid gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:items-end">
+        <div class="space-y-7">
+          <p class="section-label" data-i18n="article.label">我的学习过程与感受 / 第二篇</p>
+          <h1 class="max-w-3xl text-[3rem] font-semibold leading-[1.08] sm:text-[4rem] lg:text-[4.7rem]" data-i18n-html="article.title">开始真的去用 AI 之后，<span class="block italic text-[var(--accent)]">我慢慢学着先把问题问清楚。</span></h1>
+          <p class="max-w-2xl text-base leading-8 text-[var(--muted)]" data-i18n="article.intro">从最初的好奇往后走一步，我开始真的去用它。也是在这个过程中，我才发现，原来最难的并不只是找到答案，而是先学着把自己想问的东西说清楚。</p>
+          <div class="grid gap-4 sm:grid-cols-3">
+            <div class="meta-card rounded-[1.4rem] p-5">
+              <p class="section-label" data-i18n="meta.1.label">状态</p>
+              <p class="mt-3 text-base text-[var(--text)]" data-i18n="meta.1.value">开始上手</p>
+            </div>
+            <div class="meta-card rounded-[1.4rem] p-5">
+              <p class="section-label" data-i18n="meta.2.label">关键词</p>
+              <p class="mt-3 text-base text-[var(--text)]" data-i18n="meta.2.value">提问、试错、停顿</p>
+            </div>
+            <div class="meta-card rounded-[1.4rem] p-5">
+              <p class="section-label" data-i18n="meta.3.label">记录方式</p>
+              <p class="mt-3 text-base text-[var(--text)]" data-i18n="meta.3.value">边用边修正</p>
+            </div>
+          </div>
+        </div>
+
+        <figure class="article-visual">
+          <svg viewBox="0 0 1200 900" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <linearGradient id="detail-bg-02" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#f7f0e8" />
+                <stop offset="44%" stop-color="#d8c9b9" />
+                <stop offset="100%" stop-color="#72847d" />
+              </linearGradient>
+              <filter id="detail-blur-02" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="24" />
+              </filter>
+            </defs>
+            <rect width="1200" height="900" fill="url(#detail-bg-02)" />
+            <ellipse cx="250" cy="176" rx="232" ry="140" fill="#fffaf4" opacity="0.4" filter="url(#detail-blur-02)" />
+            <rect x="110" y="172" width="462" height="360" rx="30" fill="#f8f4ee" opacity="0.96" />
+            <rect x="150" y="214" width="130" height="130" rx="18" fill="#d7c9b9" opacity="0.98" />
+            <rect x="306" y="218" width="216" height="18" rx="9" fill="#8ca098" opacity="0.42" />
+            <rect x="306" y="258" width="188" height="14" rx="7" fill="#8ca098" opacity="0.24" />
+            <rect x="306" y="292" width="166" height="14" rx="7" fill="#8ca098" opacity="0.18" />
+            <rect x="150" y="378" width="372" height="106" rx="20" fill="#efe5d8" opacity="0.82" />
+            <rect x="668" y="160" width="326" height="380" rx="28" fill="#314942" opacity="0.16" />
+            <rect x="704" y="202" width="256" height="296" rx="18" fill="#f5efe7" opacity="0.94" />
+            <rect x="732" y="236" width="200" height="10" rx="5" fill="#8da098" opacity="0.26" />
+            <rect x="732" y="272" width="174" height="10" rx="5" fill="#8da098" opacity="0.18" />
+            <rect x="732" y="308" width="188" height="10" rx="5" fill="#8da098" opacity="0.14" />
+            <path d="M730 578C772 534 854 506 914 534C956 554 970 610 944 662C906 738 802 766 742 720C696 684 692 620 730 578Z" fill="#7d9088" opacity="0.34" />
+            <ellipse cx="846" cy="676" rx="204" ry="66" fill="#49605a" opacity="0.12" />
+          </svg>
+          <figcaption class="article-visual__note">
+            <p class="section-label" data-i18n="visual.noteLabel">图像注记</p>
+            <p class="mt-3 text-base font-serif leading-7 text-[var(--text)]" data-i18n="visual.noteBody">像一张已经写过又改过的提问纸：边上有删改，中央才慢慢出现真正想说的话。</p>
+          </figcaption>
+        </figure>
+      </section>
+
+      <section class="mt-16 grid gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:gap-12">
+        <aside class="space-y-4">
+          <div class="glass-panel rounded-[1.8rem] p-6">
+            <p class="section-label" data-i18n="aside.label">这一篇里</p>
+            <div class="mt-5 space-y-4 text-sm leading-7 text-[var(--muted)]">
+              <p data-i18n="aside.1">第一次真正开始用 AI 时，我感受到的具体变化</p>
+              <p data-i18n="aside.2">为什么我慢慢发现，提问本身比答案更难</p>
+              <p data-i18n="aside.3">那些小小有效的时刻，为什么会让我愿意继续</p>
+            </div>
+          </div>
+          <div class="glass-panel rounded-[1.8rem] p-6">
+            <p class="section-label" data-i18n="aside.quoteLabel">一句话</p>
+            <p class="pull-quote mt-5 text-lg font-serif leading-9" data-i18n="aside.quote">我以为自己是在学着使用 AI，后来才发现，我也在学着更认真地表达自己到底想要什么。</p>
+          </div>
+        </aside>
+
+        <article class="glass-panel rounded-[2rem] p-7 sm:p-10 lg:p-12">
+          <div class="article-body max-w-3xl">
+            <p data-i18n="body.1">如果第一篇更像是站在门口往里看，那么这一篇，大概就是我开始真的把手放到门把上。不是只远远地觉得它重要，而是开始试着用它，看看它到底会以怎样的方式进入我的学习和生活。</p>
+            <p data-i18n="body.2">也是从这个时候起，我才慢慢发现，真正让我卡住的，往往不是工具本身有多复杂，而是我并没有那么清楚自己到底想问什么。很多时候，我心里只有一种模糊的感觉：我想知道一点什么、我想弄明白一点什么，可一旦要把它说出来，就会发现原来并不容易。</p>
+            <p data-i18n="body.3">这件事对我来说其实挺新鲜的。以前我会以为，问题本来就是自然出现的，答案才是更难的部分。但开始接触 AI 之后，我越来越感觉到，提问像是在替自己整理思路。问得越模糊，得到的东西也越散；问得越具体，自己反而越能看见真正困住自己的点在哪里。</p>
+            <p data-i18n="body.4">当然，这个过程并不总是顺利。有时候我会反复改一句话，或者换很多种说法，最后还是觉得没有准确表达出自己真正想知道的东西。可也正是在这些停顿和试错里，我第一次比较清楚地意识到，学习并不是只把外面的知识拿进来，也是在练习怎样和自己的想法待在一起。</p>
+            <p data-i18n="body.5">偶尔也会有一些很小但很亮的时刻。比如某个问题终于被我说清楚之后，得到的回应一下子变得具体起来；又或者原本一团模糊的感觉，因为重新组织过一次语言，反而被自己先看明白了一点。这些瞬间并不轰动，却会让我认真记住：原来我是真的有在往前走。</p>
+            <p data-i18n="body.6">所以如果这一篇留下些什么，我想它留住的不是某个技巧，而是一个变化：我开始明白，靠近 AI 的过程，也是在学着更清楚地表达、提问、整理和理解自己。而这件事，也许会比我一开始以为的更重要。</p>
+          </div>
+        </article>
+      </section>
+
+      <section class="mt-16 flex flex-col gap-6 border-t border-[var(--line)] pt-8">
+        <div class="flex flex-wrap gap-3">
+          <a href="./index.html#works" class="inline-flex rounded-full border border-[var(--line)] px-5 py-3 text-sm font-medium text-[var(--text)] transition hover:border-[var(--accent)] hover:text-[var(--accent)]" data-i18n="footer.backToColumn">回到这个栏目</a>
+          <a href="./index.html" class="inline-flex rounded-full border border-[var(--line)] px-5 py-3 text-sm font-medium text-[var(--text)] transition hover:border-[var(--accent)] hover:text-[var(--accent)]" data-i18n="footer.backHome">回到首页</a>
+        </div>
+
+        <div class="grid gap-4 lg:grid-cols-2">
+          <div>
+            <p class="section-label" data-i18n="footer.label">另一条线</p>
+            <p class="mt-3 text-base leading-8 text-[var(--muted)]" data-i18n="footer.body">一边练习提问，一边我也会把外面那些不断变化的工具和信息线索，继续收进另一条线里。</p>
+          </div>
+          <a href="./ai-info-collection-01.html" class="glass-panel rounded-[1.8rem] p-6 transition hover:border-[var(--accent)] hover:text-[var(--accent)]">
+            <p class="section-label" data-i18n="footer.nextLabel">去另一篇</p>
+            <h2 class="mt-4 text-2xl font-semibold leading-tight" data-i18n="footer.nextTitle">《我想先把 AI 世界里不断出现的信息，慢慢整理成自己看得懂的线索》</h2>
+            <p class="mt-4 text-sm leading-7 text-[var(--muted)]" data-i18n="footer.nextBody">继续读 AI 信息收集首篇，看看我会先把哪些变化、工具和资源慢慢放进自己的资料档案里。</p>
+          </a>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const translations = {
+      zh: {
+        "meta.title": "Zinin | 我的学习过程与感受",
+        "meta.description": "我的学习过程与感受第二篇：开始真的去用 AI 之后，我慢慢学着先把问题问清楚。",
+        "nav.back": "返回首页",
+        "crumb.home": "首页",
+        "crumb.columns": "栏目",
+        "crumb.current": "我的学习过程与感受",
+        "article.label": "我的学习过程与感受 / 第二篇",
+        "article.title": "开始真的去用 AI 之后，<span class=\"block italic text-[var(--accent)]\">我慢慢学着先把问题问清楚。</span>",
+        "article.intro": "从最初的好奇往后走一步，我开始真的去用它。也是在这个过程中，我才发现，原来最难的并不只是找到答案，而是先学着把自己想问的东西说清楚。",
+        "meta.1.label": "状态",
+        "meta.1.value": "开始上手",
+        "meta.2.label": "关键词",
+        "meta.2.value": "提问、试错、停顿",
+        "meta.3.label": "记录方式",
+        "meta.3.value": "边用边修正",
+        "visual.noteLabel": "图像注记",
+        "visual.noteBody": "像一张已经写过又改过的提问纸：边上有删改，中央才慢慢出现真正想说的话。",
+        "aside.label": "这一篇里",
+        "aside.1": "第一次真的把它用起来",
+        "aside.2": "问题比答案更难一些",
+        "aside.3": "那些微小却发亮的时刻",
+        "aside.quoteLabel": "一句话",
+        "aside.quote": "我一边学着用 AI，也一边学着把自己想说的话说清楚。",
+        "body.1": "如果第一篇更像是站在门口往里看，那么这一篇，大概就是我开始真的把手放到门把上。不是只远远地觉得它重要，而是开始试着用它，看看它到底会以怎样的方式进入我的学习和生活。",
+        "body.2": "也是从这个时候起，我才慢慢发现，真正让我卡住的，往往不是工具本身有多复杂，而是我并没有那么清楚自己到底想问什么。很多时候，我心里只有一种模糊的感觉：我想知道一点什么、我想弄明白一点什么，可一旦要把它说出来，就会发现原来并不容易。",
+        "body.3": "这件事对我来说其实挺新鲜的。以前我会以为，问题本来就是自然出现的，答案才是更难的部分。但开始接触 AI 之后，我越来越感觉到，提问像是在替自己整理思路。问得越模糊，得到的东西也越散；问得越具体，自己反而越能看见真正困住自己的点在哪里。",
+        "body.4": "当然，这个过程并不总是顺利。有时候我会反复改一句话，或者换很多种说法，最后还是觉得没有准确表达出自己真正想知道的东西。可也正是在这些停顿和试错里，我第一次比较清楚地意识到，学习并不是只把外面的知识拿进来，也是在练习怎样和自己的想法待在一起。",
+        "body.5": "偶尔也会有一些很小但很亮的时刻。比如某个问题终于被我说清楚之后，得到的回应一下子变得具体起来；又或者原本一团模糊的感觉，因为重新组织过一次语言，反而被自己先看明白了一点。这些瞬间并不轰动，却会让我认真记住：原来我是真的有在往前走。",
+        "body.6": "所以如果这一篇留下些什么，我想它留住的不是某个技巧，而是一个变化：我开始明白，靠近 AI 的过程，也是在学着更清楚地表达、提问、整理和理解自己。而这件事，也许会比我一开始以为的更重要。",
+        "footer.label": "另一条线",
+        "footer.body": "一边练习提问，一边我也会把外面那些不断变化的工具和信息线索，继续收进另一条线里。",
+        "footer.backToColumn": "回到这个栏目",
+        "footer.backHome": "回到首页",
+        "footer.nextLabel": "去另一篇",
+        "footer.nextTitle": "《我想先把 AI 世界里不断出现的信息，慢慢整理成自己看得懂的线索》",
+        "footer.nextBody": "继续读 AI 信息收集首篇，看看我会先把哪些变化、工具和资源慢慢放进自己的资料档案里。"
+      },
+      en: {
+        "meta.title": "Zinin | My Learning Process & Feelings",
+        "meta.description": "Second entry in my learning process and feelings: after I truly began using AI, I slowly learned to first make my questions clearer.",
+        "nav.back": "Back Home",
+        "crumb.home": "Home",
+        "crumb.columns": "Columns",
+        "crumb.current": "My Learning Process & Feelings",
+        "article.label": "My Learning Process & Feelings / Second Entry",
+        "article.title": "After I truly began using AI, <span class=\"block italic text-[var(--accent)]\">I slowly learned to make my questions clearer first.</span>",
+        "article.intro": "A step after the first curiosity, I began to really use it. And in that process, I realized the hardest part was not only finding answers, but first learning how to say more clearly what I wanted to ask.",
+        "meta.1.label": "Status",
+        "meta.1.value": "Getting Hands-On",
+        "meta.2.label": "Keywords",
+        "meta.2.value": "Questions, Trial, Pauses",
+        "meta.3.label": "Method",
+        "meta.3.value": "Using While Revising",
+        "visual.noteLabel": "Visual Note",
+        "visual.noteBody": "Like a question sheet already written on and revised: edits at the edges, and only slowly the real sentence appearing in the middle.",
+        "aside.label": "In This Entry",
+        "aside.1": "The first time I truly used it",
+        "aside.2": "Questions turning out harder than answers",
+        "aside.3": "The small moments that still glowed",
+        "aside.quoteLabel": "One Line",
+        "aside.quote": "While learning to use AI, I was also learning to say what I meant more clearly.",
+        "body.1": "If the first entry was more like standing at the door and looking in, this one is the moment I truly began to place my hand on the handle. Not just sensing from afar that it mattered, but actually trying to use it and seeing how it might enter my learning and everyday life.",
+        "body.2": "It was also around then that I slowly realized what blocked me was often not the tool itself, but the fact that I was not actually that clear about what I wanted to ask. Many times I only had a vague feeling: I wanted to know something, to understand something, and yet once I had to say it out loud, I found it was not easy at all.",
+        "body.3": "That felt surprisingly new to me. I used to think questions simply appeared on their own, while answers were the truly difficult part. But after getting closer to AI, I kept feeling that asking was a way of arranging my own thoughts. The blurrier the question, the more scattered the response. The more specific the question, the more clearly I could see what had really been holding me back.",
+        "body.4": "Of course, the process was not always smooth. Sometimes I would rewrite a sentence again and again, or try many versions of the same thought, and still feel that I had not expressed what I really wanted to know. Yet inside those pauses and trials, I began to understand something quite clearly for the first time: learning is not only about taking knowledge in from the outside, but also about practicing how to stay with my own thoughts.",
+        "body.5": "There were also very small but bright moments. A question would finally become clear, and the response would suddenly turn specific. Or a feeling that had been one vague blur would become easier for me to understand simply because I had reorganized the language around it. None of these moments were dramatic, but they made me remember with care that I really was moving forward.",
+        "body.6": "So if this entry keeps anything, I hope it keeps not a technique but a shift: I am beginning to understand that moving closer to AI is also a practice in speaking, asking, arranging, and understanding myself more clearly. And that may matter more than I first imagined.",
+        "footer.label": "The Other Line",
+        "footer.body": "While I practice asking better questions, I also want to keep gathering the changing tools and signals of the outside world into the other line.",
+        "footer.backToColumn": "Back to This Column",
+        "footer.backHome": "Back Home",
+        "footer.nextLabel": "Read the Other Entry",
+        "footer.nextTitle": "I want to slowly sort the constant flow of AI information into clues I can actually understand.",
+        "footer.nextBody": "Continue into the first AI information-gathering entry, where I begin placing tools, shifts, and resources into an archive I can return to later."
+      }
+    };
+
+    const metaDescription = document.getElementById("meta-description");
+    const languageButtons = document.querySelectorAll("[data-lang-select]");
+
+    function setLanguage(lang) {
+      const dictionary = translations[lang] || translations.zh;
+
+      document.documentElement.lang = lang === "en" ? "en" : "zh-CN";
+      document.title = dictionary["meta.title"];
+      metaDescription.setAttribute("content", dictionary["meta.description"]);
+
+      document.querySelectorAll("[data-i18n]").forEach((node) => {
+        const key = node.getAttribute("data-i18n");
+        if (dictionary[key]) {
+          node.textContent = dictionary[key];
+        }
+      });
+
+      document.querySelectorAll("[data-i18n-html]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-html");
+        if (dictionary[key]) {
+          node.innerHTML = dictionary[key];
+        }
+      });
+
+      languageButtons.forEach((button) => {
+        const isActive = button.getAttribute("data-lang-select") === lang;
+        button.classList.toggle("is-active", isActive);
+        button.setAttribute("aria-pressed", isActive ? "true" : "false");
+      });
+
+      localStorage.setItem("zinin-language", lang);
+    }
+
+    languageButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        setLanguage(button.getAttribute("data-lang-select"));
+      });
+    });
+
+    const savedLanguage = localStorage.getItem("zinin-language");
+    setLanguage(savedLanguage || "zh");
+  </script>
+</body>
+</html>

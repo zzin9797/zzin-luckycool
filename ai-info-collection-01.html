@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zinin | AI 信息收集</title>
+  <meta id="meta-description" name="description" content="AI 信息收集首篇：我想先把 AI 世界里不断出现的信息，慢慢整理成自己看得懂的线索。" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f4efe7;
+      --panel: rgba(255, 252, 247, 0.74);
+      --text: #1d1b19;
+      --muted: #6a6259;
+      --line: rgba(29, 27, 25, 0.12);
+      --accent: #26453f;
+      --shadow: 0 20px 60px rgba(41, 35, 28, 0.08);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Manrope", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(255, 255, 255, 0.72), transparent 36%),
+        linear-gradient(180deg, #f7f2ea 0%, #f1eae0 42%, #eee6da 100%);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    h1,
+    h2,
+    h3,
+    .font-serif {
+      font-family: "Noto Serif SC", serif;
+    }
+
+    .grain::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+      background-size: 28px 28px;
+      opacity: 0.25;
+      mix-blend-mode: soft-light;
+    }
+
+    .glass-panel {
+      background: var(--panel);
+      border: 1px solid rgba(255, 255, 255, 0.58);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+    }
+
+    .section-label {
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-size: 0.72rem;
+    }
+
+    .lang-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.15rem;
+      padding: 0.2rem;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.68);
+    }
+
+    .lang-toggle button {
+      min-width: 2.7rem;
+      padding: 0.5rem 0.8rem;
+      border: 0;
+      border-radius: 999px;
+      background: transparent;
+      color: var(--muted);
+      font-size: 0.8rem;
+      line-height: 1;
+      transition: background-color 180ms ease, color 180ms ease;
+    }
+
+    .lang-toggle button.is-active {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .article-visual {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.64);
+      border-radius: 2rem;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.52), rgba(214, 202, 189, 0.72));
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.58),
+        inset 0 -24px 48px rgba(67, 58, 47, 0.08),
+        0 14px 30px rgba(52, 45, 37, 0.08);
+    }
+
+    .article-visual::before,
+    .article-visual::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .article-visual::before {
+      background:
+        radial-gradient(circle at 18% 16%, rgba(255, 255, 255, 0.54), transparent 28%),
+        radial-gradient(circle at 78% 82%, rgba(38, 69, 63, 0.12), transparent 34%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 42%);
+      opacity: 0.95;
+    }
+
+    .article-visual::after {
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent 26%, rgba(29, 27, 25, 0.12) 100%),
+        repeating-linear-gradient(
+          0deg,
+          rgba(255, 255, 255, 0.035),
+          rgba(255, 255, 255, 0.035) 2px,
+          transparent 2px,
+          transparent 4px
+        );
+      mix-blend-mode: soft-light;
+    }
+
+    .article-visual svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      filter: saturate(0.88) contrast(0.97) brightness(1.02);
+    }
+
+    .article-visual__note {
+      position: absolute;
+      inset: auto 1rem 1rem auto;
+      max-width: 14rem;
+      padding: 0.9rem 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.58);
+      border-radius: 1rem;
+      background: rgba(247, 242, 234, 0.76);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 10px 24px rgba(52, 45, 37, 0.08);
+    }
+
+    .article-body p {
+      font-size: 1.05rem;
+      line-height: 2;
+      color: var(--text);
+    }
+
+    .article-body p + p {
+      margin-top: 1.4rem;
+    }
+
+    .pull-quote {
+      border-left: 1px solid rgba(38, 69, 63, 0.22);
+      padding-left: 1.4rem;
+      color: var(--accent);
+    }
+
+    .meta-card {
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.34);
+    }
+  </style>
+</head>
+<body class="grain antialiased">
+  <div class="mx-auto max-w-6xl px-6 pb-24 pt-6 sm:px-8 lg:px-12">
+    <header class="glass-panel sticky top-4 z-20 rounded-full px-5 py-4 sm:px-7">
+      <div class="flex items-center justify-between gap-4">
+        <a href="./index.html" class="text-sm font-semibold uppercase tracking-[0.28em] text-[var(--accent)]">Zinin</a>
+        <div class="flex items-center gap-3">
+          <div class="lang-toggle" aria-label="Language switcher">
+            <button type="button" data-lang-select="zh" class="is-active">中</button>
+            <button type="button" data-lang-select="en">EN</button>
+          </div>
+          <a href="./index.html#works" class="rounded-full border border-[var(--line)] bg-white/70 px-4 py-2 text-sm text-[var(--text)] transition hover:border-[var(--accent)] hover:text-[var(--accent)]" data-i18n="nav.back">返回首页</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="pt-12 lg:pt-16">
+      <nav class="mb-8 flex flex-wrap items-center gap-3 text-sm text-[var(--muted)]">
+        <a href="./index.html" class="transition hover:text-[var(--accent)]" data-i18n="crumb.home">首页</a>
+        <span>/</span>
+        <a href="./index.html#works" class="transition hover:text-[var(--accent)]" data-i18n="crumb.columns">栏目</a>
+        <span>/</span>
+        <span data-i18n="crumb.current">AI 信息收集</span>
+      </nav>
+
+      <section class="grid gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:items-end">
+        <div class="space-y-7">
+          <p class="section-label" data-i18n="article.label">AI 信息收集 / 首篇</p>
+          <h1 class="max-w-3xl text-[3rem] font-semibold leading-[1.08] sm:text-[4rem] lg:text-[4.7rem]" data-i18n-html="article.title">我想先把 AI 世界里不断出现的信息，<span class="block italic text-[var(--accent)]">慢慢整理成自己看得懂的线索。</span></h1>
+          <p class="max-w-2xl text-base leading-8 text-[var(--muted)]" data-i18n="article.intro">这不是一份完整的资料库，更像是我给自己搭的一个起点。先把那些不断出现的 AI 工具、变化、应用与资源慢慢收集起来，留下一份之后还能回看的信息档案。</p>
+          <div class="grid gap-4 sm:grid-cols-3">
+            <div class="meta-card rounded-[1.4rem] p-5">
+              <p class="section-label" data-i18n="meta.1.label">当前关注</p>
+              <p class="mt-3 text-base text-[var(--text)]" data-i18n="meta.1.value">工具与变化</p>
+            </div>
+            <div class="meta-card rounded-[1.4rem] p-5">
+              <p class="section-label" data-i18n="meta.2.label">关键词</p>
+              <p class="mt-3 text-base text-[var(--text)]" data-i18n="meta.2.value">收集、筛选、回看</p>
+            </div>
+            <div class="meta-card rounded-[1.4rem] p-5">
+              <p class="section-label" data-i18n="meta.3.label">记录方式</p>
+              <p class="mt-3 text-base text-[var(--text)]" data-i18n="meta.3.value">边看边整理</p>
+            </div>
+          </div>
+        </div>
+
+        <figure class="article-visual">
+          <svg viewBox="0 0 1200 900" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <linearGradient id="detail-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#f7f0e8" />
+                <stop offset="48%" stop-color="#d8c9b9" />
+                <stop offset="100%" stop-color="#72847d" />
+              </linearGradient>
+              <filter id="detail-blur" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="26" />
+              </filter>
+            </defs>
+            <rect width="1200" height="900" fill="url(#detail-bg)" />
+            <ellipse cx="236" cy="168" rx="226" ry="138" fill="#fffaf4" opacity="0.4" filter="url(#detail-blur)" />
+            <rect x="120" y="170" width="438" height="352" rx="30" fill="#f8f4ee" opacity="0.96" />
+            <rect x="164" y="214" width="118" height="118" rx="20" fill="#d7c9b9" opacity="0.96" />
+            <rect x="308" y="214" width="208" height="16" rx="8" fill="#8ca098" opacity="0.38" />
+            <rect x="308" y="250" width="172" height="12" rx="6" fill="#8ca098" opacity="0.22" />
+            <rect x="308" y="280" width="188" height="12" rx="6" fill="#8ca098" opacity="0.18" />
+            <rect x="164" y="364" width="352" height="112" rx="22" fill="#efe5d8" opacity="0.82" />
+            <rect x="690" y="198" width="320" height="252" rx="32" fill="#314942" opacity="0.2" />
+            <rect x="726" y="236" width="246" height="178" rx="18" fill="#f5efe7" opacity="0.94" />
+            <rect x="752" y="266" width="196" height="8" rx="4" fill="#8da098" opacity="0.28" />
+            <rect x="752" y="294" width="170" height="8" rx="4" fill="#8da098" opacity="0.18" />
+            <rect x="752" y="322" width="182" height="8" rx="4" fill="#8da098" opacity="0.14" />
+            <ellipse cx="830" cy="642" rx="204" ry="64" fill="#49605a" opacity="0.14" />
+            <path d="M706 586C740 538 812 510 862 530C900 546 914 586 900 626C878 686 802 716 748 696C706 680 686 632 706 586Z" fill="#7d9088" opacity="0.38" />
+          </svg>
+          <figcaption class="article-visual__note">
+            <p class="section-label" data-i18n="visual.noteLabel">图像注记</p>
+            <p class="mt-3 text-base font-serif leading-7 text-[var(--text)]" data-i18n="visual.noteBody">像一张正在被慢慢分类的桌面：有卡片、有线索，也有还需要继续辨认的变化。</p>
+          </figcaption>
+        </figure>
+      </section>
+
+      <section class="mt-16 grid gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:gap-12">
+        <aside class="space-y-4">
+          <div class="glass-panel rounded-[1.8rem] p-6">
+            <p class="section-label" data-i18n="aside.label">这一篇里</p>
+            <div class="mt-5 space-y-4 text-sm leading-7 text-[var(--muted)]">
+              <p data-i18n="aside.1">先把线索轻轻收好</p>
+              <p data-i18n="aside.2">去看哪些变化一直在出现</p>
+              <p data-i18n="aside.3">留一页以后还能翻回来的东西</p>
+            </div>
+          </div>
+          <div class="glass-panel rounded-[1.8rem] p-6">
+            <p class="section-label" data-i18n="aside.quoteLabel">一句话</p>
+            <p class="pull-quote mt-5 text-lg font-serif leading-9" data-i18n="aside.quote">在真正看懂之前，我想先把那些不断出现的线索认真收好。</p>
+          </div>
+        </aside>
+
+        <article class="glass-panel rounded-[2rem] p-7 sm:p-10 lg:p-12">
+          <div class="article-body max-w-3xl">
+            <p data-i18n="body.1">AI 这个领域变化得很快。工具在更新，概念在更新，大家讨论的重点也在不断变化。对现在的我来说，如果只是零散地看见一些新闻、帖子或案例，它们很容易一闪而过，最后什么也没真正留下来。</p>
+            <p data-i18n="body.2">所以我慢慢意识到，在我真正学会“理解”之前，也许可以先学会“收集”。先把那些不断出现的信息线索留下来：哪些工具被反复提起，哪些应用开始更真实地进入生活，哪些资源值得以后回头再看一次。</p>
+            <p data-i18n="body.3">我并不想把这个栏目做成一种看起来很厉害的资料库。它更像是我自己的整理桌面。不是所有信息都要放进来，而是只留下那些对我来说有意义、能帮助我慢慢看懂这个领域的东西。</p>
+            <p data-i18n="body.4">现在我更在意的几类信息，大概包括工具动态、真实应用、行业变化，还有适合初学者继续往下看的学习资源。它们不一定马上就能让我明白很多，但至少能帮我知道：这个世界正在发生什么，我下一步可以先看哪里。</p>
+            <p data-i18n="body.5">我想，这个栏目之后也会一直保持一种很朴素的样子。不是为了追求“最新最全”，而是为了给自己慢慢建立一种回看能力。当信息越来越多的时候，能被重新找到、重新理解，反而会变得更重要。</p>
+            <p data-i18n="body.6">如果这篇是一个开始，那它更像是在告诉自己：面对一个变化很快的世界，我不一定要立刻懂很多，但我可以先把那些值得留下来的信息，认真收好。然后再慢慢把它们变成自己的理解。</p>
+          </div>
+        </article>
+      </section>
+
+      <section class="mt-16 flex flex-col gap-6 border-t border-[var(--line)] pt-8">
+        <div class="flex flex-wrap gap-3">
+          <a href="./index.html#works" class="inline-flex rounded-full border border-[var(--line)] px-5 py-3 text-sm font-medium text-[var(--text)] transition hover:border-[var(--accent)] hover:text-[var(--accent)]" data-i18n="footer.backToColumn">回到这个栏目</a>
+          <a href="./index.html" class="inline-flex rounded-full border border-[var(--line)] px-5 py-3 text-sm font-medium text-[var(--text)] transition hover:border-[var(--accent)] hover:text-[var(--accent)]" data-i18n="footer.backHome">回到首页</a>
+        </div>
+
+        <div class="grid gap-4 lg:grid-cols-2">
+          <div>
+            <p class="section-label" data-i18n="footer.label">另一条线</p>
+            <p class="mt-3 text-base leading-8 text-[var(--muted)]" data-i18n="footer.body">收集之外，我也会把自己学习时那些更私人、更真实的感受，放到另一条线里继续写下去。</p>
+          </div>
+          <a href="./ai-learning-record-01.html" class="glass-panel rounded-[1.8rem] p-6 transition hover:border-[var(--accent)] hover:text-[var(--accent)]">
+            <p class="section-label" data-i18n="footer.nextLabel">去另一篇</p>
+            <h2 class="mt-4 text-2xl font-semibold leading-tight" data-i18n="footer.nextTitle">《第一次靠近 AI，我只是先有了一点好奇》</h2>
+            <p class="mt-4 text-sm leading-7 text-[var(--muted)]" data-i18n="footer.nextBody">继续读我的学习过程与感受首篇，看看我为什么会开始愿意靠近这个以前陌生的领域。</p>
+          </a>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const translations = {
+      zh: {
+        "meta.title": "Zinin | AI 信息收集",
+        "meta.description": "AI 信息收集首篇：我想先把 AI 世界里不断出现的信息，慢慢整理成自己看得懂的线索。",
+        "nav.back": "返回首页",
+        "crumb.home": "首页",
+        "crumb.columns": "栏目",
+        "crumb.current": "AI 信息收集",
+        "article.label": "AI 信息收集 / 首篇",
+        "article.title": "我想先把 AI 世界里不断出现的信息，<span class=\"block italic text-[var(--accent)]\">慢慢整理成自己看得懂的线索。</span>",
+        "article.intro": "这不是一份完整的资料库，更像是我给自己搭的一个起点。先把那些不断出现的 AI 工具、变化、应用与资源慢慢收集起来，留下一份之后还能回看的信息档案。",
+        "meta.1.label": "当前关注",
+        "meta.1.value": "工具与变化",
+        "meta.2.label": "关键词",
+        "meta.2.value": "收集、筛选、回看",
+        "meta.3.label": "记录方式",
+        "meta.3.value": "边看边整理",
+        "visual.noteLabel": "图像注记",
+        "visual.noteBody": "像一张正在被慢慢分类的桌面：有卡片、有线索，也有还需要继续辨认的变化。",
+        "aside.label": "这一篇里",
+        "aside.1": "先把线索轻轻收好",
+        "aside.2": "去看哪些变化一直在出现",
+        "aside.3": "留一页以后还能翻回来的东西",
+        "aside.quoteLabel": "一句话",
+        "aside.quote": "在真正看懂之前，我想先把那些不断出现的线索认真收好。",
+        "body.1": "AI 这个领域变化得很快。工具在更新，概念在更新，大家讨论的重点也在不断变化。对现在的我来说，如果只是零散地看见一些新闻、帖子或案例，它们很容易一闪而过，最后什么也没真正留下来。",
+        "body.2": "所以我慢慢意识到，在我真正学会“理解”之前，也许可以先学会“收集”。先把那些不断出现的信息线索留下来：哪些工具被反复提起，哪些应用开始更真实地进入生活，哪些资源值得以后回头再看一次。",
+        "body.3": "我并不想把这个栏目做成一种看起来很厉害的资料库。它更像是我自己的整理桌面。不是所有信息都要放进来，而是只留下那些对我来说有意义、能帮助我慢慢看懂这个领域的东西。",
+        "body.4": "现在我更在意的几类信息，大概包括工具动态、真实应用、行业变化，还有适合初学者继续往下看的学习资源。它们不一定马上就能让我明白很多，但至少能帮我知道：这个世界正在发生什么，我下一步可以先看哪里。",
+        "body.5": "我想，这个栏目之后也会一直保持一种很朴素的样子。不是为了追求“最新最全”，而是为了给自己慢慢建立一种回看能力。当信息越来越多的时候，能被重新找到、重新理解，反而会变得更重要。",
+        "body.6": "如果这篇是一个开始，那它更像是在告诉自己：面对一个变化很快的世界，我不一定要立刻懂很多，但我可以先把那些值得留下来的信息，认真收好。然后再慢慢把它们变成自己的理解。",
+        "footer.label": "另一条线",
+        "footer.body": "收集之外，我也会把自己学习时那些更私人、更真实的感受，放到另一条线里继续写下去。",
+        "footer.backToColumn": "回到这个栏目",
+        "footer.backHome": "回到首页",
+        "footer.nextLabel": "去另一篇",
+        "footer.nextTitle": "《第一次靠近 AI，我只是先有了一点好奇》",
+        "footer.nextBody": "继续读我的学习过程与感受首篇，看看我为什么会开始愿意靠近这个以前陌生的领域。"
+      },
+      en: {
+        "meta.title": "Zinin | AI Information Gathering",
+        "meta.description": "First AI information-gathering entry: I want to slowly sort the constant flow of AI information into clues I can actually understand.",
+        "nav.back": "Back Home",
+        "crumb.home": "Home",
+        "crumb.columns": "Columns",
+        "crumb.current": "AI Information Gathering",
+        "article.label": "AI Information Gathering / First Entry",
+        "article.title": "I want to slowly sort the constant flow of AI information into <span class=\"block italic text-[var(--accent)]\">clues I can actually understand.</span>",
+        "article.intro": "This is not a complete resource library. It is more like a starting point I am building for myself: a place to slowly gather AI tools, shifts, applications, and resources into an archive I can return to later.",
+        "meta.1.label": "Current Focus",
+        "meta.1.value": "Tools and Shifts",
+        "meta.2.label": "Keywords",
+        "meta.2.value": "Gathering, Filtering, Returning",
+        "meta.3.label": "Method",
+        "meta.3.value": "Watching While Organizing",
+        "visual.noteLabel": "Visual Note",
+        "visual.noteBody": "Like a desk slowly being sorted: cards, clues, and changes that still need to be recognized more clearly.",
+        "aside.label": "In This Entry",
+        "aside.1": "Gathering the clues before they fade",
+        "aside.2": "Watching which changes keep returning",
+        "aside.3": "Keeping a page I can come back to later",
+        "aside.quoteLabel": "One Line",
+        "aside.quote": "Before I can truly understand a field, I want to gather its returning signals with care.",
+        "body.1": "AI changes quickly. Tools change, ideas change, and the focus of conversation keeps shifting. For the person I am now, if I only come across scattered news, posts, or examples, they disappear almost immediately, and nothing truly stays behind.",
+        "body.2": "So I slowly realized that before I fully learn how to understand, perhaps I can first learn how to gather. I can begin by keeping the signals that keep appearing: which tools are mentioned again and again, which applications are becoming more real in everyday life, and which resources may be worth returning to later.",
+        "body.3": "I do not want this column to become a resource library that looks impressive from the outside. It feels more like my own sorting desk. Not everything needs to be placed here, only the things that matter to me and might help me slowly understand this field more clearly.",
+        "body.4": "Right now, the kinds of information I care about most include tool updates, real applications, industry shifts, and learning resources that beginners can actually keep following. They may not help me understand everything at once, but they can help me know what is happening and where I might look next.",
+        "body.5": "I think this column will probably keep a very plain shape for a while. It is not here to chase what is newest or most complete. It is here to build, slowly, an ability to return. When information becomes overwhelming, being able to find and understand it again may matter even more.",
+        "body.6": "If this entry is a beginning, it is really a note to myself: when facing a world that changes this quickly, I do not need to understand everything right away. I can first keep the information worth saving, with care, and only then slowly turn it into my own understanding.",
+        "footer.label": "The Other Line",
+        "footer.body": "Alongside gathering, I also want to keep writing the more private and honest feelings that appear while I am learning.",
+        "footer.backToColumn": "Back to This Column",
+        "footer.backHome": "Back Home",
+        "footer.nextLabel": "Read the Other Entry",
+        "footer.nextTitle": "When I first moved closer to AI, it began with a little curiosity.",
+        "footer.nextBody": "Continue into the first entry about my learning process and feelings, where I begin to write about why I became willing to move closer to this once unfamiliar field."
+      }
+    };
+
+    const metaDescription = document.getElementById("meta-description");
+    const languageButtons = document.querySelectorAll("[data-lang-select]");
+
+    function setLanguage(lang) {
+      const dictionary = translations[lang] || translations.zh;
+
+      document.documentElement.lang = lang === "en" ? "en" : "zh-CN";
+      document.title = dictionary["meta.title"];
+      metaDescription.setAttribute("content", dictionary["meta.description"]);
+
+      document.querySelectorAll("[data-i18n]").forEach((node) => {
+        const key = node.getAttribute("data-i18n");
+        if (dictionary[key]) {
+          node.textContent = dictionary[key];
+        }
+      });
+
+      document.querySelectorAll("[data-i18n-html]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-html");
+        if (dictionary[key]) {
+          node.innerHTML = dictionary[key];
+        }
+      });
+
+      languageButtons.forEach((button) => {
+        const isActive = button.getAttribute("data-lang-select") === lang;
+        button.classList.toggle("is-active", isActive);
+        button.setAttribute("aria-pressed", isActive ? "true" : "false");
+      });
+
+      localStorage.setItem("zinin-language", lang);
+    }
+
+    languageButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        setLanguage(button.getAttribute("data-lang-select"));
+      });
+    });
+
+    const savedLanguage = localStorage.getItem("zinin-language");
+    setLanguage(savedLanguage || "zh");
+  </script>
+</body>
+</html>

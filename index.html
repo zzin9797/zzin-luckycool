@@ -1,0 +1,1884 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zinin | 内容创作者</title>
+  <meta id="meta-description" name="description" content="Zinin 的个人网站初版，记录写作表达、产品与网页、生活观察与正在形成中的作品。" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f4efe7;
+      --bg-soft: #ede5da;
+      --panel: rgba(255, 252, 247, 0.72);
+      --text: #1d1b19;
+      --muted: #6a6259;
+      --line: rgba(29, 27, 25, 0.12);
+      --accent: #26453f;
+      --accent-soft: rgba(38, 69, 63, 0.12);
+      --shadow: 0 20px 60px rgba(41, 35, 28, 0.08);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Manrope", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(255, 255, 255, 0.72), transparent 36%),
+        linear-gradient(180deg, #f7f2ea 0%, #f1eae0 42%, #eee6da 100%);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    h1,
+    h2,
+    h3,
+    .font-serif {
+      font-family: "Noto Serif SC", serif;
+    }
+
+    .grain::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+      background-size: 28px 28px;
+      opacity: 0.25;
+      mix-blend-mode: soft-light;
+    }
+
+    .section-label {
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-size: 0.72rem;
+    }
+
+    .glass-panel {
+      background: var(--panel);
+      border: 1px solid rgba(255, 255, 255, 0.58);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+    }
+
+    .hero-card {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      inset: auto -12% -18% auto;
+      width: 220px;
+      height: 220px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(38, 69, 63, 0.18), rgba(38, 69, 63, 0));
+      filter: blur(12px);
+    }
+
+    .hero-visual {
+      position: relative;
+      min-height: 28rem;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.58), rgba(255, 255, 255, 0.14)),
+        linear-gradient(135deg, rgba(38, 69, 63, 0.18), rgba(255, 255, 255, 0));
+    }
+
+    .hero-visual::before,
+    .hero-visual::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      border: 1px solid rgba(38, 69, 63, 0.16);
+    }
+
+    .hero-visual::before {
+      inset: 8% 12% auto auto;
+      width: 11rem;
+      height: 11rem;
+    }
+
+    .hero-visual::after {
+      inset: auto auto 10% 10%;
+      width: 14rem;
+      height: 14rem;
+    }
+
+    .hero-quote {
+      text-wrap: pretty;
+    }
+
+    html[lang="en"] .hero-title {
+      font-size: 2.8rem;
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+    }
+
+    @media (min-width: 640px) {
+      html[lang="en"] .hero-title {
+        font-size: 3.7rem;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      html[lang="en"] .hero-title {
+        font-size: 4.7rem;
+      }
+    }
+
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--line), transparent);
+    }
+
+    .work-card,
+    .focus-card,
+    .contact-card {
+      transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+    }
+
+    .work-card:hover,
+    .focus-card:hover,
+    .contact-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(38, 69, 63, 0.28);
+      box-shadow: 0 18px 40px rgba(41, 35, 28, 0.08);
+    }
+
+    .site-shell {
+      transition: filter 520ms ease, transform 520ms ease, opacity 380ms ease;
+      transform-origin: center top;
+    }
+
+    body.is-transitioning {
+      overflow: hidden;
+    }
+
+    body.is-transitioning .site-shell {
+      filter: blur(14px);
+      transform: scale(0.986);
+      opacity: 0.5;
+    }
+
+    .work-card.is-transition-source {
+      position: relative;
+      z-index: 3;
+      transform: translateY(-8px) scale(1.028);
+      border-color: rgba(38, 69, 63, 0.3);
+      box-shadow: 0 30px 72px rgba(41, 35, 28, 0.18);
+      filter: saturate(1.02) brightness(1.02);
+    }
+
+    .page-transition {
+      position: fixed;
+      inset: 0;
+      z-index: 80;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 320ms ease;
+    }
+
+    .page-transition::before,
+    .page-transition::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+    }
+
+    .page-transition::before {
+      background:
+        radial-gradient(circle at top, rgba(255, 255, 255, 0.72), transparent 32%),
+        linear-gradient(180deg, rgba(244, 239, 231, 0.95), rgba(234, 225, 214, 0.98));
+    }
+
+    .page-transition::after {
+      background:
+        radial-gradient(circle at 50% 46%, rgba(38, 69, 63, 0.08), transparent 30%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(29, 27, 25, 0.06));
+      opacity: 0.9;
+    }
+
+    .page-transition.is-visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .page-transition__panel {
+      position: relative;
+      width: min(100%, 42rem);
+      padding: 1.2rem;
+      border: 1px solid rgba(255, 255, 255, 0.64);
+      border-radius: 2.1rem;
+      background: rgba(255, 252, 247, 0.62);
+      box-shadow: 0 34px 84px rgba(41, 35, 28, 0.18);
+      backdrop-filter: blur(22px);
+      transform: translateY(34px) scale(0.972);
+      opacity: 0;
+      transition: transform 720ms cubic-bezier(0.22, 1, 0.36, 1), opacity 420ms ease;
+    }
+
+    .page-transition__panel::before {
+      content: "";
+      position: absolute;
+      inset: 0.9rem 0.9rem -0.9rem -0.9rem;
+      border-radius: 1.8rem;
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      background: rgba(255, 249, 242, 0.24);
+      transform: translateY(1rem);
+      opacity: 0.66;
+      z-index: -1;
+    }
+
+    .page-transition.is-visible .page-transition__panel {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+
+    .page-transition__sheet {
+      position: relative;
+      overflow: hidden;
+      border-radius: 1.6rem;
+      border: 1px solid rgba(38, 69, 63, 0.12);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.76), rgba(242, 234, 224, 0.94)),
+        repeating-linear-gradient(
+          0deg,
+          rgba(29, 27, 25, 0.018),
+          rgba(29, 27, 25, 0.018) 2px,
+          transparent 2px,
+          transparent 5px
+        );
+      padding: 2.2rem 1.5rem 1.7rem;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.75),
+        inset 0 -16px 32px rgba(67, 58, 47, 0.06);
+    }
+
+    .page-transition__sheet::before,
+    .page-transition__sheet::after {
+      content: "";
+      position: absolute;
+    }
+
+    .page-transition__sheet::before {
+      inset: 0 auto 0 0;
+      width: 0.42rem;
+      background: linear-gradient(180deg, rgba(38, 69, 63, 0.18), rgba(38, 69, 63, 0.05));
+    }
+
+    .page-transition__sheet::after {
+      top: -10%;
+      bottom: -10%;
+      left: -32%;
+      width: 32%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.58), transparent);
+      opacity: 0;
+      transform: skewX(-14deg) translateX(0);
+    }
+
+    .page-transition.is-visible .page-transition__sheet::after {
+      opacity: 1;
+      animation: transitionSweep 860ms cubic-bezier(0.22, 1, 0.36, 1) forwards 120ms;
+    }
+
+    .page-transition__status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .page-transition__status::before {
+      content: "";
+      width: 0.5rem;
+      height: 0.5rem;
+      border-radius: 999px;
+      background: rgba(38, 69, 63, 0.62);
+      box-shadow: 0 0 0 0 rgba(38, 69, 63, 0.22);
+      animation: transitionPulse 1.45s ease-out infinite;
+    }
+
+    .page-transition__divider {
+      margin-top: 1.2rem;
+      height: 2px;
+      width: 100%;
+      background: linear-gradient(90deg, rgba(38, 69, 63, 0.2), rgba(38, 69, 63, 0.04));
+    }
+
+    .page-transition__label,
+    .page-transition__title,
+    .page-transition__message {
+      transform: translateY(18px);
+      opacity: 0;
+      transition: transform 620ms cubic-bezier(0.22, 1, 0.36, 1), opacity 360ms ease;
+    }
+
+    .page-transition.is-visible .page-transition__label,
+    .page-transition.is-visible .page-transition__title,
+    .page-transition.is-visible .page-transition__message {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .page-transition__label {
+      margin-top: 1.35rem;
+      color: var(--muted);
+      font-size: 0.8rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      transition-delay: 90ms;
+    }
+
+    .page-transition__title {
+      margin-top: 1rem;
+      max-width: 28rem;
+      font-family: "Noto Serif SC", serif;
+      font-size: clamp(2.1rem, 3.4vw, 3.1rem);
+      line-height: 1.16;
+      transition-delay: 160ms;
+    }
+
+    .page-transition__message {
+      margin-top: 1rem;
+      max-width: 23rem;
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.92;
+      transition-delay: 240ms;
+    }
+
+    @keyframes transitionPulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(38, 69, 63, 0.18);
+      }
+
+      70% {
+        box-shadow: 0 0 0 12px rgba(38, 69, 63, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(38, 69, 63, 0);
+      }
+    }
+
+    @keyframes transitionSweep {
+      0% {
+        transform: skewX(-14deg) translateX(0);
+      }
+
+      100% {
+        transform: skewX(-14deg) translateX(420%);
+      }
+    }
+
+    .image-placeholder {
+      background:
+        linear-gradient(135deg, rgba(38, 69, 63, 0.12), rgba(255, 255, 255, 0.4)),
+        repeating-linear-gradient(
+          135deg,
+          rgba(29, 27, 25, 0.03),
+          rgba(29, 27, 25, 0.03) 10px,
+          transparent 10px,
+          transparent 20px
+        );
+    }
+
+    .editorial-image {
+      position: relative;
+      overflow: hidden;
+      margin: 0;
+      border: 1px solid rgba(255, 255, 255, 0.66);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.52), rgba(214, 202, 189, 0.72));
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.58),
+        inset 0 -24px 48px rgba(67, 58, 47, 0.08),
+        0 14px 30px rgba(52, 45, 37, 0.08);
+    }
+
+    .editorial-image::before,
+    .editorial-image::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .editorial-image::before {
+      background:
+        radial-gradient(circle at 18% 16%, rgba(255, 255, 255, 0.54), transparent 28%),
+        radial-gradient(circle at 78% 82%, rgba(38, 69, 63, 0.12), transparent 34%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 42%);
+      opacity: 0.95;
+    }
+
+    .editorial-image::after {
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent 26%, rgba(29, 27, 25, 0.12) 100%),
+        repeating-linear-gradient(
+          0deg,
+          rgba(255, 255, 255, 0.035),
+          rgba(255, 255, 255, 0.035) 2px,
+          transparent 2px,
+          transparent 4px
+        );
+      mix-blend-mode: soft-light;
+    }
+
+    .editorial-image svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+      filter: saturate(0.88) contrast(0.97) brightness(1.02);
+      transform: scale(1.01);
+      transform-origin: center;
+    }
+
+    .editorial-image--hero {
+      aspect-ratio: 4 / 5;
+      border-radius: 1.6rem;
+    }
+
+    .editorial-image--card {
+      aspect-ratio: 16 / 10;
+      border-radius: 1.2rem;
+    }
+
+    .editorial-image__caption {
+      position: absolute;
+      inset: auto 1.1rem 1rem 1.1rem;
+      display: grid;
+      gap: 0.35rem;
+      max-width: 17rem;
+      padding: 0.9rem 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.58);
+      border-radius: 1rem;
+      background: rgba(247, 242, 234, 0.72);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 10px 24px rgba(52, 45, 37, 0.08);
+    }
+
+    .editorial-image__caption--card {
+      inset: auto auto 0.95rem 0.95rem;
+      max-width: 10.5rem;
+      padding: 0.72rem 0.85rem;
+      gap: 0.28rem;
+      border-radius: 0.9rem;
+      background: rgba(248, 243, 236, 0.76);
+    }
+
+    .editorial-image__meta {
+      font-size: 0.65rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .editorial-image__title {
+      font-family: "Noto Serif SC", serif;
+      font-size: 1rem;
+      line-height: 1.45;
+      color: var(--text);
+    }
+
+    .works-grid {
+      align-items: start;
+    }
+
+    .editorial-card {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .editorial-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.2), transparent 32%);
+      pointer-events: none;
+    }
+
+    .editorial-card__index {
+      font-size: 0.72rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .editorial-card__title {
+      max-width: 18rem;
+      line-height: 1.35;
+    }
+
+    .editorial-card--feature {
+      background: rgba(255, 252, 247, 0.82);
+    }
+
+    .anchor-link {
+      position: relative;
+    }
+
+    .anchor-link::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -0.2rem;
+      width: 100%;
+      height: 1px;
+      background: currentColor;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 180ms ease;
+    }
+
+    .anchor-link:hover::after,
+    .anchor-link:focus-visible::after {
+      transform: scaleX(1);
+    }
+
+    .archive-shell {
+      display: grid;
+      gap: 1.25rem;
+    }
+
+    .archive-preview {
+      position: relative;
+      overflow: hidden;
+      min-height: 26rem;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.68), rgba(255, 255, 255, 0.38)),
+        linear-gradient(135deg, rgba(38, 69, 63, 0.1), rgba(255, 255, 255, 0));
+    }
+
+    .archive-preview::after {
+      content: "";
+      position: absolute;
+      inset: auto -8% -18% auto;
+      width: 16rem;
+      height: 16rem;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(38, 69, 63, 0.16), rgba(38, 69, 63, 0));
+      filter: blur(16px);
+      pointer-events: none;
+    }
+
+    .archive-preview__ornament {
+      position: absolute;
+      inset: 1.5rem 1.5rem auto auto;
+      display: grid;
+      gap: 0.55rem;
+      justify-items: end;
+      pointer-events: none;
+    }
+
+    .archive-preview__ornament span {
+      display: block;
+      border-radius: 999px;
+      border: 1px solid rgba(38, 69, 63, 0.16);
+    }
+
+    .archive-preview__ornament span:nth-child(1) {
+      width: 3.75rem;
+      height: 3.75rem;
+    }
+
+    .archive-preview__ornament span:nth-child(2) {
+      width: 1.1rem;
+      height: 1.1rem;
+    }
+
+    .archive-chip {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.48);
+      padding: 0.45rem 0.8rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .archive-reel {
+      position: relative;
+      overflow: hidden;
+      min-height: 33rem;
+      padding: 1.5rem 0;
+      cursor: grab;
+      touch-action: pan-x pan-y;
+    }
+
+    .archive-reel.is-animating {
+      cursor: grabbing;
+    }
+
+    .archive-reel::before,
+    .archive-reel::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 4.5rem;
+      z-index: 5;
+      pointer-events: none;
+    }
+
+    .archive-reel::before {
+      top: 0;
+      background: linear-gradient(180deg, rgba(241, 234, 224, 0.96), rgba(241, 234, 224, 0));
+    }
+
+    .archive-reel::after {
+      bottom: 0;
+      background: linear-gradient(0deg, rgba(241, 234, 224, 0.96), rgba(241, 234, 224, 0));
+    }
+
+    .archive-track {
+      position: relative;
+      min-height: 30rem;
+      perspective: 1600px;
+      transform-style: preserve-3d;
+      --archive-drift: 0px;
+    }
+
+    .archive-card {
+      position: absolute;
+      inset: 1.5rem 0;
+      min-height: 26rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      text-align: left;
+      opacity: 0;
+      pointer-events: none;
+      transform: translate3d(calc(var(--archive-drift, 0px) * 0.18), 4.5rem, 0) scale(0.94) rotateX(-4deg);
+      transform-origin: center;
+      filter: saturate(0.92) blur(0px);
+      transition:
+        transform 560ms cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 380ms ease,
+        border-color 260ms ease,
+        filter 320ms ease,
+        box-shadow 320ms ease;
+    }
+
+    .archive-card::after {
+      content: "";
+      position: absolute;
+      inset: auto 8% -1.1rem;
+      height: 2.6rem;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(41, 35, 28, 0.14), rgba(41, 35, 28, 0));
+      filter: blur(10px);
+      opacity: 0;
+      transition: opacity 320ms ease;
+      pointer-events: none;
+    }
+
+    .archive-card.is-active {
+      z-index: 3;
+      opacity: 1;
+      pointer-events: auto;
+      border-color: rgba(38, 69, 63, 0.28);
+      transform: translate3d(var(--archive-drift, 0px), 0, 0) scale(1) rotateX(0deg);
+      filter: saturate(1) blur(0px);
+      box-shadow: 0 26px 60px rgba(41, 35, 28, 0.12);
+    }
+
+    .archive-card.is-active::after {
+      opacity: 1;
+    }
+
+    .archive-card.is-prev {
+      z-index: 1;
+      opacity: 0.34;
+      transform: translate3d(calc(var(--archive-drift, 0px) * 0.4 - 0.6rem), -64%, -40px) scale(0.9) rotateX(8deg);
+      filter: saturate(0.88) blur(0.4px);
+    }
+
+    .archive-card.is-next {
+      z-index: 2;
+      opacity: 0.56;
+      transform: translate3d(calc(var(--archive-drift, 0px) * 0.4 + 0.6rem), 64%, -20px) scale(0.945) rotateX(-6deg);
+      filter: saturate(0.92) blur(0.2px);
+    }
+
+    .archive-card.is-hidden {
+      z-index: 0;
+      opacity: 0;
+      transform: translate3d(calc(var(--archive-drift, 0px) * 0.15), 112%, -60px) scale(0.88) rotateX(-10deg);
+      filter: blur(1.2px);
+    }
+
+    .archive-card:hover {
+      border-color: rgba(38, 69, 63, 0.24);
+    }
+
+    .archive-card__content,
+    .archive-card__meta {
+      transition: opacity 320ms ease, transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: opacity, transform;
+    }
+
+    .archive-card__content {
+      opacity: 0.58;
+      transform: translateY(1rem);
+    }
+
+    .archive-card__meta {
+      opacity: 0.52;
+      transform: translateY(1.35rem);
+    }
+
+    .archive-card.is-active .archive-card__content {
+      opacity: 1;
+      transform: translateY(0);
+      transition-delay: 90ms;
+    }
+
+    .archive-card.is-active .archive-card__meta {
+      opacity: 1;
+      transform: translateY(0);
+      transition-delay: 160ms;
+    }
+
+    .archive-card.is-prev .archive-card__content,
+    .archive-card.is-next .archive-card__content {
+      opacity: 0.5;
+      transform: translateY(0.6rem);
+    }
+
+    .archive-card.is-prev .archive-card__meta,
+    .archive-card.is-next .archive-card__meta {
+      opacity: 0.34;
+      transform: translateY(0.9rem);
+    }
+
+    .archive-controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .archive-progress {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+    }
+
+    .archive-dot {
+      width: 0.55rem;
+      height: 0.55rem;
+      border-radius: 999px;
+      background: rgba(38, 69, 63, 0.16);
+      transition: transform 220ms ease, background-color 220ms ease, width 260ms ease, opacity 220ms ease;
+      opacity: 0.7;
+    }
+
+    .archive-dot.is-active {
+      width: 1.7rem;
+      background: var(--accent);
+      transform: scale(1);
+      opacity: 1;
+    }
+
+    .archive-nav {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .archive-nav button {
+      width: 2.8rem;
+      height: 2.8rem;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.58);
+      color: var(--text);
+      transition: border-color 180ms ease, color 180ms ease, transform 180ms ease;
+    }
+
+    .archive-nav button:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    @media (min-width: 1024px) {
+      .archive-shell {
+        grid-template-columns: 0.92fr 1.08fr;
+        align-items: start;
+      }
+
+      .archive-preview {
+        position: sticky;
+        top: 7rem;
+      }
+    }
+
+    .lang-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.15rem;
+      padding: 0.2rem;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.68);
+    }
+
+    .lang-toggle button {
+      min-width: 2.7rem;
+      padding: 0.5rem 0.8rem;
+      border: 0;
+      border-radius: 999px;
+      background: transparent;
+      color: var(--muted);
+      font-size: 0.8rem;
+      line-height: 1;
+      transition: background-color 180ms ease, color 180ms ease;
+    }
+
+    .lang-toggle button.is-active {
+      background: var(--accent);
+      color: #fff;
+    }
+  </style>
+</head>
+<body class="grain antialiased">
+  <div class="site-shell mx-auto max-w-7xl px-6 pb-24 pt-6 sm:px-8 lg:px-12">
+    <header class="glass-panel sticky top-4 z-20 rounded-full px-5 py-4 sm:px-7">
+      <div class="flex items-center justify-between gap-4">
+        <a href="#top" class="text-sm font-semibold tracking-[0.28em] text-[var(--accent)] uppercase">Zinin</a>
+        <nav class="hidden items-center gap-6 text-sm text-[var(--muted)] md:flex">
+          <a class="anchor-link" href="#focus" data-i18n="nav.now">此刻</a>
+          <a class="anchor-link" href="#about" data-i18n="nav.about">关于</a>
+          <a class="anchor-link" href="#works" data-i18n="nav.works">栏目</a>
+          <a class="anchor-link" href="#contact" data-i18n="nav.contact">联系</a>
+        </nav>
+        <div class="flex items-center gap-3">
+          <div class="lang-toggle" aria-label="Language switcher">
+            <button type="button" data-lang-select="zh" class="is-active">中</button>
+            <button type="button" data-lang-select="en">EN</button>
+          </div>
+          <a href="#contact" class="rounded-full border border-[var(--line)] bg-white/70 px-4 py-2 text-sm text-[var(--text)] transition hover:border-[var(--accent)] hover:text-[var(--accent)]" data-i18n="nav.cta">联系我</a>
+        </div>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="grid min-h-[88vh] items-end gap-8 pb-14 pt-12 lg:grid-cols-[1.08fr_0.92fr] lg:pb-20 lg:pt-16">
+        <div class="flex min-h-[30rem] flex-col justify-center py-4">
+          <div class="max-w-3xl space-y-8">
+            <p class="text-sm uppercase tracking-[0.28em] text-[var(--muted)]" data-i18n="hero.kicker">Zinin / 把微风、光影与心事，留在页边</p>
+
+            <h1 class="hero-title hero-quote max-w-3xl text-[3.4rem] font-semibold leading-[1.02] sm:text-[4.5rem] lg:text-[5.8rem]" data-i18n-html="hero.title">
+              那些轻轻落下的事物，
+              <span class="block italic text-[var(--accent)]">慢慢长成我向外走去的痕迹。</span>
+            </h1>
+
+            <div class="pt-2">
+              <a href="#about" class="inline-flex rounded-full border border-[var(--line)] px-6 py-3 text-sm font-medium text-[var(--text)] transition hover:border-[var(--accent)] hover:text-[var(--accent)]" data-i18n="hero.button">读一读我</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-panel hero-card hero-visual rounded-[2rem] p-6 sm:p-8 lg:p-10">
+          <div class="flex h-full min-h-[28rem] flex-col justify-between">
+            <div class="flex items-start justify-between gap-6">
+              <p class="section-label" data-i18n="hero.visual.label">主视觉</p>
+              <div class="rounded-full border border-[var(--line)] px-3 py-1 text-xs uppercase tracking-[0.2em] text-[var(--accent)]" data-i18n="hero.visual.badge">已接入</div>
+            </div>
+
+            <div class="mx-auto grid w-full max-w-md gap-4">
+              <figure class="editorial-image editorial-image--hero">
+                <svg viewBox="0 0 800 1000" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
+                  <defs>
+                    <linearGradient id="hero-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#f6f0e8" />
+                      <stop offset="42%" stop-color="#d9cbbe" />
+                      <stop offset="100%" stop-color="#74837b" />
+                    </linearGradient>
+                    <radialGradient id="hero-light" cx="24%" cy="18%" r="54%">
+                      <stop offset="0%" stop-color="rgba(255,255,255,0.96)" />
+                      <stop offset="72%" stop-color="rgba(255,255,255,0)" />
+                    </radialGradient>
+                    <linearGradient id="hero-window" x1="0%" y1="0%" x2="0%" y2="100%">
+                      <stop offset="0%" stop-color="#f8f3ec" />
+                      <stop offset="100%" stop-color="#d7c9ba" />
+                    </linearGradient>
+                    <filter id="hero-blur" x="-20%" y="-20%" width="140%" height="140%">
+                      <feGaussianBlur stdDeviation="22" />
+                    </filter>
+                  </defs>
+                  <rect width="800" height="1000" fill="url(#hero-bg)" />
+                  <rect width="800" height="1000" fill="url(#hero-light)" opacity="0.9" />
+                  <ellipse cx="602" cy="250" rx="184" ry="212" fill="#f9f4ee" opacity="0.34" filter="url(#hero-blur)" />
+                  <rect x="96" y="110" width="286" height="596" rx="152" fill="#ece3d7" opacity="0.54" />
+                  <rect x="140" y="144" width="236" height="664" rx="118" fill="url(#hero-window)" opacity="0.94" />
+                  <rect x="182" y="190" width="10" height="566" rx="5" fill="#98a79f" opacity="0.34" />
+                  <rect x="232" y="190" width="10" height="566" rx="5" fill="#98a79f" opacity="0.2" />
+                  <path d="M420 734C486 654 542 616 598 602C642 592 682 608 694 648C708 696 678 754 624 812C564 876 500 914 448 902C394 888 382 822 420 734Z" fill="#425952" opacity="0.2" filter="url(#hero-blur)" />
+                  <path d="M454 742C522 656 582 616 642 604C686 596 718 612 726 648C734 692 706 748 646 804C576 870 512 902 462 890C410 876 402 816 454 742Z" fill="#455d55" opacity="0.46" />
+                  <rect x="540" y="188" width="146" height="196" rx="18" transform="rotate(8 540 188)" fill="#fbf7f1" opacity="0.94" />
+                  <rect x="562" y="226" width="100" height="8" rx="4" transform="rotate(8 562 226)" fill="#8f7f70" opacity="0.28" />
+                  <rect x="562" y="258" width="88" height="8" rx="4" transform="rotate(8 562 258)" fill="#8f7f70" opacity="0.18" />
+                  <path d="M534 420C572 432 612 458 648 500" stroke="#f7f1ea" stroke-width="4" stroke-linecap="round" opacity="0.46" />
+                </svg>
+                <figcaption class="editorial-image__caption">
+                  <p class="text-[0.65rem] uppercase tracking-[0.28em] text-[var(--muted)]" data-i18n="hero.visual.frameLabel">主视觉</p>
+                  <p class="text-lg font-serif leading-snug text-[var(--text)]" data-i18n="hero.visual.frameTitle">这里先留给以后会到来的主视觉。</p>
+                </figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="divider"></div>
+
+      <section id="focus" class="grid gap-10 py-20 lg:grid-cols-[0.92fr_1.08fr] lg:py-24">
+        <div class="space-y-5">
+          <p class="section-label" data-i18n="focus.label">此刻</p>
+          <h2 class="max-w-xl text-3xl font-semibold leading-tight sm:text-4xl" data-i18n-html="focus.title">
+            现在的我，更想
+            <span class="italic text-[var(--accent)]">一点点长出自己</span>。
+          </h2>
+        </div>
+        <div class="grid gap-4 md:grid-cols-3">
+          <article class="focus-card glass-panel rounded-[1.75rem] p-6">
+            <p class="text-sm font-medium uppercase tracking-[0.2em] text-[var(--muted)]" data-i18n="focus.card1.label">01 / 记录</p>
+            <p class="mt-6 text-lg leading-8" data-i18n="focus.card1.body">把那些还没有定型的片段，先认真留下来。</p>
+          </article>
+          <article class="focus-card glass-panel rounded-[1.75rem] p-6">
+            <p class="text-sm font-medium uppercase tracking-[0.2em] text-[var(--muted)]" data-i18n="focus.card2.label">02 / 学习</p>
+            <p class="mt-6 text-lg leading-8" data-i18n="focus.card2.body">把靠近新世界的过程，慢慢写成自己的路。</p>
+          </article>
+          <article class="focus-card glass-panel rounded-[1.75rem] p-6">
+            <p class="text-sm font-medium uppercase tracking-[0.2em] text-[var(--muted)]" data-i18n="focus.card3.label">03 / 观察</p>
+            <p class="mt-6 text-lg leading-8" data-i18n="focus.card3.body">在日常里辨认，什么会让我长久地看下去。</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="about" class="grid gap-8 py-20 lg:grid-cols-[0.9fr_1.1fr] lg:py-24">
+        <div class="glass-panel rounded-[2rem] p-8 sm:p-10">
+          <p class="section-label" data-i18n="about.label">关于</p>
+          <h2 class="mt-5 text-3xl font-semibold leading-tight sm:text-4xl" data-i18n="about.title">关于我，是一个还在学习，也还在慢慢朝光里走的人。</h2>
+          <div class="mt-10 space-y-8">
+            <article class="rounded-[1.5rem] border border-[var(--line)] bg-white/40 p-6">
+              <p class="text-sm uppercase tracking-[0.2em] text-[var(--muted)]" data-i18n="about.versionA.label">关于我</p>
+              <p class="mt-4 text-base leading-8 text-[var(--text)]" data-i18n="about.versionA.body">
+                我容易被细小的事物打动，也习惯把它们轻轻记下来。表达对我来说，不必一下子完整，它可以像页边的一笔风，也像夜里的一点光，先留下，再慢慢长成自己的样子。
+              </p>
+            </article>
+            <article class="rounded-[1.5rem] border border-[var(--line)] bg-white/40 p-6">
+              <p class="text-sm uppercase tracking-[0.2em] text-[var(--muted)]" data-i18n="about.versionB.label">现在的我</p>
+              <p class="mt-4 text-base leading-8 text-[var(--text)]" data-i18n="about.versionB.body">
+                现在的我，正从零开始靠近 AI。想借这段路，看见世界的新变化，也看见自己一点点走出旧日的边界。
+              </p>
+            </article>
+          </div>
+        </div>
+
+        <div class="grid gap-4">
+          <article class="glass-panel rounded-[2rem] p-8 sm:p-10">
+            <p class="section-label" data-i18n="keywords.label">关键词</p>
+            <div class="mt-6 flex flex-wrap gap-3 text-sm text-[var(--text)]">
+              <span class="rounded-full border border-[var(--line)] px-4 py-2" data-i18n="keywords.1">感性表达</span>
+              <span class="rounded-full border border-[var(--line)] px-4 py-2" data-i18n="keywords.2">观察记录</span>
+              <span class="rounded-full border border-[var(--line)] px-4 py-2" data-i18n="keywords.3">从零学 AI</span>
+              <span class="rounded-full border border-[var(--line)] px-4 py-2" data-i18n="keywords.4">成长过程</span>
+              <span class="rounded-full border border-[var(--line)] px-4 py-2" data-i18n="keywords.5">跳出原有圈子</span>
+              <span class="rounded-full border border-[var(--line)] px-4 py-2" data-i18n="keywords.6">真实变化</span>
+            </div>
+          </article>
+
+          <article class="glass-panel rounded-[2rem] p-8 sm:p-10">
+            <p class="section-label" data-i18n="approach.label">我的方式</p>
+            <div class="mt-6 grid gap-5 sm:grid-cols-2">
+              <div>
+                <p class="text-sm uppercase tracking-[0.2em] text-[var(--muted)]" data-i18n="approach.1.label">表达</p>
+                <p class="mt-3 text-base leading-8" data-i18n="approach.1.body">不追求说得多漂亮，更在意那些真实发生过的感受有没有被认真留下来。</p>
+              </div>
+              <div>
+                <p class="text-sm uppercase tracking-[0.2em] text-[var(--muted)]" data-i18n="approach.2.label">观察</p>
+                <p class="mt-3 text-base leading-8" data-i18n="approach.2.body">喜欢从日常细节里感受人和世界，也愿意把这些细碎观察慢慢整理成文字。</p>
+              </div>
+              <div>
+                <p class="text-sm uppercase tracking-[0.2em] text-[var(--muted)]" data-i18n="approach.3.label">学习</p>
+                <p class="mt-3 text-base leading-8" data-i18n="approach.3.body">正在从零进入 AI 这个陌生领域，把学习过程本身也视作一种重要的成长记录。</p>
+              </div>
+              <div>
+                <p class="text-sm uppercase tracking-[0.2em] text-[var(--muted)]" data-i18n="approach.4.label">变化</p>
+                <p class="mt-3 text-base leading-8" data-i18n="approach.4.body">想慢慢跳出原有的封闭圈子，主动靠近更大的世界，也让自己变得更充实一些。</p>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="works" class="py-20 lg:py-24">
+        <div class="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p class="section-label" data-i18n="works.label">栏目</p>
+            <h2 class="mt-4 max-w-2xl text-3xl font-semibold leading-tight sm:text-4xl" data-i18n="works.title">先把那些已经长出轮廓的内容，安静地留在这里。</h2>
+          </div>
+          <p class="max-w-md text-sm leading-7 text-[var(--muted)]" data-i18n="works.intro">
+            现在先有三条线：收集、学习，还有成长。它们都还在路上，却已经开始有了自己的页、风声，与一点点缓慢亮起的光。
+          </p>
+        </div>
+
+        <div class="works-grid mt-12 grid gap-5 lg:grid-cols-2">
+          <article class="work-card editorial-card editorial-card--feature glass-panel rounded-[2rem] p-6 sm:p-7">
+            <div class="mb-5 flex items-center justify-between gap-4">
+              <span class="editorial-card__index">01</span>
+              <p class="text-xs uppercase tracking-[0.22em] text-[var(--muted)]" data-i18n="works.card1.label">AI 信息收集 / 首篇</p>
+            </div>
+            <a href="./ai-info-collection-01.html" class="block transition hover:opacity-95" aria-label="AI 信息收集首篇" data-work-link>
+              <figure class="editorial-image editorial-image--card">
+                <svg viewBox="0 0 960 600" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
+                  <defs>
+                    <linearGradient id="card-ai-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#f7f0e8" />
+                      <stop offset="46%" stop-color="#dacbbb" />
+                      <stop offset="100%" stop-color="#73847d" />
+                    </linearGradient>
+                    <filter id="card-ai-blur" x="-20%" y="-20%" width="140%" height="140%">
+                      <feGaussianBlur stdDeviation="18" />
+                    </filter>
+                  </defs>
+                  <rect width="960" height="600" fill="url(#card-ai-bg)" />
+                  <ellipse cx="194" cy="118" rx="180" ry="108" fill="#fffaf4" opacity="0.42" filter="url(#card-ai-blur)" />
+                  <rect x="74" y="92" width="418" height="324" rx="28" fill="#f8f4ee" opacity="0.96" />
+                  <rect x="108" y="134" width="150" height="182" rx="18" fill="#d7c9b9" opacity="0.98" />
+                  <rect x="278" y="136" width="170" height="18" rx="9" fill="#8ca098" opacity="0.42" />
+                  <rect x="278" y="176" width="142" height="14" rx="7" fill="#8ca098" opacity="0.24" />
+                  <rect x="278" y="208" width="156" height="14" rx="7" fill="#8ca098" opacity="0.18" />
+                  <rect x="278" y="242" width="122" height="14" rx="7" fill="#8ca098" opacity="0.16" />
+                  <rect x="518" y="170" width="280" height="220" rx="30" fill="#314942" opacity="0.22" />
+                  <rect x="548" y="202" width="218" height="150" rx="16" fill="#f5efe7" opacity="0.94" />
+                  <rect x="566" y="222" width="182" height="8" rx="4" fill="#8da098" opacity="0.26" />
+                  <rect x="566" y="246" width="156" height="8" rx="4" fill="#8da098" opacity="0.18" />
+                  <ellipse cx="674" cy="450" rx="150" ry="58" fill="#49605a" opacity="0.14" />
+                  <path d="M592 408C614 370 666 346 704 368C730 384 740 418 726 452C708 494 648 518 610 496C582 478 576 440 592 408Z" fill="#7d9088" opacity="0.4" />
+                  <path d="M576 396C612 344 698 330 752 354" stroke="#f7f1ea" stroke-width="4" stroke-linecap="round" opacity="0.42" />
+                </svg>
+                <figcaption class="editorial-image__caption editorial-image__caption--card">
+                  <p class="editorial-image__meta" data-i18n="works.card1.visualMeta">信息线索</p>
+                  <p class="editorial-image__title" data-i18n="works.card1.visualTitle">从屏幕、卡片与正在汇集的线索开始</p>
+                </figcaption>
+              </figure>
+            </a>
+            <div class="mt-6 space-y-4">
+              <h3 class="editorial-card__title text-2xl font-semibold" data-i18n="works.card1.title">《我想先把 AI 世界里不断出现的信息，慢慢整理成自己看得懂的线索》</h3>
+              <p class="text-sm leading-7 text-[var(--muted)]" data-i18n="works.card1.body">把工具动态、行业变化、学习资源与真实应用先收集起来，留下一份之后还能回看的 AI 信息档案。</p>
+              <a href="./ai-info-collection-01.html" class="inline-flex text-sm font-medium text-[var(--accent)] transition hover:opacity-70" data-i18n="works.card1.cta" data-work-link>阅读全文 →</a>
+            </div>
+          </article>
+
+          <article class="work-card editorial-card editorial-card--feature glass-panel rounded-[2rem] p-6 sm:p-7">
+            <div class="mb-5 flex items-center justify-between gap-4">
+              <span class="editorial-card__index">02</span>
+              <p class="text-xs uppercase tracking-[0.22em] text-[var(--muted)]" data-i18n="works.card2.label">我的学习过程与感受 / 第二篇</p>
+            </div>
+            <a href="./ai-learning-record-02.html" class="block transition hover:opacity-95" aria-label="我的学习过程与感受第二篇" data-work-link>
+              <figure class="editorial-image editorial-image--card">
+                <svg viewBox="0 0 960 600" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
+                  <defs>
+                    <linearGradient id="card-growth-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#f5eee6" />
+                      <stop offset="56%" stop-color="#d7c8b8" />
+                      <stop offset="100%" stop-color="#78857f" />
+                    </linearGradient>
+                    <filter id="card-growth-blur" x="-20%" y="-20%" width="140%" height="140%">
+                      <feGaussianBlur stdDeviation="16" />
+                    </filter>
+                  </defs>
+                  <rect width="960" height="600" fill="url(#card-growth-bg)" />
+                  <ellipse cx="720" cy="152" rx="170" ry="110" fill="#fbf7f0" opacity="0.32" filter="url(#card-growth-blur)" />
+                  <path d="M0 466C166 388 302 348 422 336C536 324 660 338 960 444V600H0V466Z" fill="#70807a" opacity="0.3" />
+                  <path d="M0 494C186 426 308 398 422 394C562 390 706 420 960 520V600H0V494Z" fill="#4c615b" opacity="0.5" />
+                  <rect x="196" y="94" width="140" height="346" rx="72" fill="#efe5d8" opacity="0.78" />
+                  <path d="M268 196C314 196 348 232 348 278V438H188V280C188 232 222 196 268 196Z" fill="#334943" opacity="0.56" />
+                  <circle cx="268" cy="146" r="56" fill="#d4c5b5" opacity="0.98" />
+                  <path d="M198 436C226 414 244 398 268 384C292 400 314 416 342 436" fill="#d8cab9" opacity="0.52" />
+                  <rect x="586" y="114" width="182" height="258" rx="18" transform="rotate(-7 586 114)" fill="#f8f4ee" opacity="0.92" />
+                  <rect x="622" y="164" width="102" height="10" rx="5" transform="rotate(-7 622 164)" fill="#8d7d6d" opacity="0.26" />
+                  <rect x="622" y="204" width="128" height="10" rx="5" transform="rotate(-7 622 204)" fill="#8d7d6d" opacity="0.18" />
+                  <path d="M510 356C578 314 646 290 724 280" stroke="#f7f1ea" stroke-width="4" stroke-linecap="round" opacity="0.34" />
+                </svg>
+                <figcaption class="editorial-image__caption editorial-image__caption--card">
+                  <p class="editorial-image__meta" data-i18n="works.card2.visualMeta">学习感受</p>
+                  <p class="editorial-image__title" data-i18n="works.card2.visualTitle">从好奇往前一步，开始真的去用</p>
+                </figcaption>
+              </figure>
+            </a>
+            <div class="mt-6 space-y-4">
+              <h3 class="editorial-card__title text-2xl font-semibold" data-i18n="works.card2.title">《开始真的去用 AI 之后，我慢慢学着先把问题问清楚》</h3>
+              <p class="text-sm leading-7 text-[var(--muted)]" data-i18n="works.card2.body">从最初的好奇往后走一步，写下我在真正开始使用 AI 之后，怎样在提问、试错和整理思路中慢慢继续学下去。</p>
+              <a href="./ai-learning-record-02.html" class="inline-flex text-sm font-medium text-[var(--accent)] transition hover:opacity-70" data-i18n="works.card2.cta" data-work-link>继续读第二篇 →</a>
+            </div>
+          </article>
+
+          <article class="work-card editorial-card editorial-card--feature glass-panel rounded-[2rem] p-6 sm:p-7">
+            <div class="mb-5 flex items-center justify-between gap-4">
+              <span class="editorial-card__index">03</span>
+              <p class="text-xs uppercase tracking-[0.22em] text-[var(--muted)]" data-i18n="works.card3.label">成长日志 / 首篇</p>
+            </div>
+            <a href="./growth-journal-01.html" class="block transition hover:opacity-95" aria-label="成长日志首篇" data-work-link>
+              <div class="image-placeholder rounded-[1.5rem] p-4">
+                <div class="flex aspect-[16/10] items-end rounded-[1.2rem] border border-dashed border-[rgba(38,69,63,0.28)] p-5">
+                  <p class="text-sm uppercase tracking-[0.22em] text-[var(--muted)]" data-i18n="works.card3.placeholder">成长日志 / 首篇</p>
+                </div>
+              </div>
+            </a>
+            <div class="mt-6 space-y-4">
+              <h3 class="editorial-card__title text-2xl font-semibold" data-i18n="works.card3.title">《我想慢慢走出原来的圈子，去看看更大的世界》</h3>
+              <p class="text-sm leading-7 text-[var(--muted)]" data-i18n="works.card3.body">写下我为什么想离开那种熟悉却封闭的感觉，开始主动接触新的事物，也重新认识自己正在发生的变化。</p>
+              <a href="./growth-journal-01.html" class="inline-flex text-sm font-medium text-[var(--accent)] transition hover:opacity-70" data-i18n="works.card3.cta" data-work-link>阅读全文 →</a>
+            </div>
+          </article>
+
+          <article class="work-card editorial-card glass-panel rounded-[2rem] p-6 sm:p-7">
+            <div class="mb-5 flex items-center justify-between gap-4">
+              <span class="editorial-card__index">04</span>
+              <p class="text-xs uppercase tracking-[0.22em] text-[var(--muted)]" data-i18n="works.card4.label">未来长文 / 预留</p>
+            </div>
+            <div class="image-placeholder rounded-[1.5rem] p-4">
+              <div class="flex aspect-[16/10] items-end rounded-[1.2rem] border border-dashed border-[rgba(38,69,63,0.28)] p-5">
+                <p class="text-sm uppercase tracking-[0.22em] text-[var(--muted)]" data-i18n="works.card4.placeholder">未来长文 / 预留</p>
+              </div>
+            </div>
+            <div class="mt-6 space-y-4">
+              <h3 class="editorial-card__title text-2xl font-semibold" data-i18n="works.card4.title">以后也许会写下更完整的长文</h3>
+              <p class="text-sm leading-7 text-[var(--muted)]" data-i18n="works.card4.body">它可能关于学习、关于变化、关于人与世界的关系，也可能只是某个阶段被认真留下来的一次整理。</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="archive" class="py-20 lg:py-24">
+        <div class="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p class="section-label" data-i18n="archive.label">作品集预留</p>
+            <h2 class="mt-4 max-w-3xl text-3xl font-semibold leading-tight sm:text-4xl" data-i18n="archive.title">先把未来会留下来的作品，安放在一页更安静的留白里。</h2>
+          </div>
+          <p class="max-w-md text-sm leading-7 text-[var(--muted)]" data-i18n="archive.intro">这里还不是完成的作品集，更像一册刚刚起头的目录。先留白，等真正想留下来的内容，带着自己的风与光慢慢出现。</p>
+        </div>
+
+        <div class="archive-shell mt-12">
+          <article class="archive-preview glass-panel rounded-[2rem] p-8 sm:p-10">
+            <div class="archive-preview__ornament" aria-hidden="true">
+              <span></span>
+              <span></span>
+            </div>
+            <div class="flex h-full min-h-[22rem] flex-col justify-between gap-10">
+              <div class="space-y-5">
+                <p class="section-label" data-i18n="archive.preview.label">未来档案</p>
+                <h3 class="max-w-lg text-3xl font-semibold leading-tight sm:text-[2.4rem]" data-i18n="archive.preview.title">不急着摆满，只先把方向安静地留出来。</h3>
+                <p class="max-w-xl text-base leading-8 text-[var(--muted)]" data-i18n="archive.preview.body">有些会变成专题，有些会变成长文，也有些，只会是某一阶段认真留下来的观察。</p>
+              </div>
+              <div class="flex flex-wrap gap-3">
+                <span class="archive-chip" data-i18n="archive.preview.chip1">专题项目</span>
+                <span class="archive-chip" data-i18n="archive.preview.chip2">学习实验</span>
+                <span class="archive-chip" data-i18n="archive.preview.chip3">长文记录</span>
+                <span class="archive-chip" data-i18n="archive.preview.chip4">生活观察</span>
+              </div>
+            </div>
+          </article>
+
+          <div class="archive-reel" data-archive-reel>
+            <div class="archive-track" data-archive-track>
+              <article class="archive-card glass-panel rounded-[2rem] p-7 sm:p-8 is-active" data-archive-card>
+                <div class="archive-card__content space-y-6">
+                  <div class="flex items-center justify-between gap-4">
+                    <span class="editorial-card__index">01</span>
+                    <p class="text-xs uppercase tracking-[0.22em] text-[var(--muted)]" data-i18n="archive.card1.kicker">专题项目</p>
+                  </div>
+                  <div>
+                    <h3 class="text-2xl font-semibold leading-tight sm:text-[2rem]" data-i18n="archive.card1.title">以后也许会放那些真正被认真打磨过的主题作品。</h3>
+                    <p class="mt-4 max-w-xl text-base leading-8 text-[var(--muted)]" data-i18n="archive.card1.body">它们可能是一个完整专题、一组长期观察，或一次把想法、视觉与表达都整理得更清楚的内容计划。</p>
+                  </div>
+                </div>
+                <div class="archive-card__meta grid gap-3 sm:grid-cols-2">
+                  <div class="rounded-[1.4rem] border border-[var(--line)] bg-white/40 p-5">
+                    <p class="section-label" data-i18n="archive.card1.metaLabel1">可能形态</p>
+                    <p class="mt-3 text-base leading-7 text-[var(--text)]" data-i18n="archive.card1.metaValue1">专题页 / 系列内容 / 主题合集</p>
+                  </div>
+                  <div class="rounded-[1.4rem] border border-[var(--line)] bg-white/40 p-5">
+                    <p class="section-label" data-i18n="archive.card1.metaLabel2">当前状态</p>
+                    <p class="mt-3 text-base leading-7 text-[var(--text)]" data-i18n="archive.card1.metaValue2">先预留方向，等待真正值得留下的主题出现</p>
+                  </div>
+                </div>
+              </article>
+
+              <article class="archive-card glass-panel rounded-[2rem] p-7 sm:p-8" data-archive-card>
+                <div class="archive-card__content space-y-6">
+                  <div class="flex items-center justify-between gap-4">
+                    <span class="editorial-card__index">02</span>
+                    <p class="text-xs uppercase tracking-[0.22em] text-[var(--muted)]" data-i18n="archive.card2.kicker">学习实验</p>
+                  </div>
+                  <div>
+                    <h3 class="text-2xl font-semibold leading-tight sm:text-[2rem]" data-i18n="archive.card2.title">把正在学习的新东西，慢慢变成可回看的实验轨迹。</h3>
+                    <p class="mt-4 max-w-xl text-base leading-8 text-[var(--muted)]" data-i18n="archive.card2.body">尤其是 AI、网页或新的表达工具，它们未必要立刻成熟，但会慢慢成为我理解世界变化的记录。</p>
+                  </div>
+                </div>
+                <div class="archive-card__meta grid gap-3 sm:grid-cols-2">
+                  <div class="rounded-[1.4rem] border border-[var(--line)] bg-white/40 p-5">
+                    <p class="section-label" data-i18n="archive.card2.metaLabel1">可能形态</p>
+                    <p class="mt-3 text-base leading-7 text-[var(--text)]" data-i18n="archive.card2.metaValue1">实验笔记 / 小型原型 / 过程拆解</p>
+                  </div>
+                  <div class="rounded-[1.4rem] border border-[var(--line)] bg-white/40 p-5">
+                    <p class="section-label" data-i18n="archive.card2.metaLabel2">当前状态</p>
+                    <p class="mt-3 text-base leading-7 text-[var(--text)]" data-i18n="archive.card2.metaValue2">已经开始萌芽，之后会慢慢积累成更清楚的实验档案</p>
+                  </div>
+                </div>
+              </article>
+
+              <article class="archive-card glass-panel rounded-[2rem] p-7 sm:p-8" data-archive-card>
+                <div class="archive-card__content space-y-6">
+                  <div class="flex items-center justify-between gap-4">
+                    <span class="editorial-card__index">03</span>
+                    <p class="text-xs uppercase tracking-[0.22em] text-[var(--muted)]" data-i18n="archive.card3.kicker">长文记录</p>
+                  </div>
+                  <div>
+                    <h3 class="text-2xl font-semibold leading-tight sm:text-[2rem]" data-i18n="archive.card3.title">留给那些需要更长篇幅，才能慢慢说清楚的内容。</h3>
+                    <p class="mt-4 max-w-xl text-base leading-8 text-[var(--muted)]" data-i18n="archive.card3.body">有些想法不适合被写成一句话，它们更适合在更完整的结构里，被慢慢展开、反复推敲、认真留存。</p>
+                  </div>
+                </div>
+                <div class="archive-card__meta grid gap-3 sm:grid-cols-2">
+                  <div class="rounded-[1.4rem] border border-[var(--line)] bg-white/40 p-5">
+                    <p class="section-label" data-i18n="archive.card3.metaLabel1">可能形态</p>
+                    <p class="mt-3 text-base leading-7 text-[var(--text)]" data-i18n="archive.card3.metaValue1">个人长文 / 阶段总结 / 深度表达</p>
+                  </div>
+                  <div class="rounded-[1.4rem] border border-[var(--line)] bg-white/40 p-5">
+                    <p class="section-label" data-i18n="archive.card3.metaLabel2">当前状态</p>
+                    <p class="mt-3 text-base leading-7 text-[var(--text)]" data-i18n="archive.card3.metaValue2">先留下空位，等待以后真正想认真讲清楚的主题</p>
+                  </div>
+                </div>
+              </article>
+
+              <article class="archive-card glass-panel rounded-[2rem] p-7 sm:p-8" data-archive-card>
+                <div class="archive-card__content space-y-6">
+                  <div class="flex items-center justify-between gap-4">
+                    <span class="editorial-card__index">04</span>
+                    <p class="text-xs uppercase tracking-[0.22em] text-[var(--muted)]" data-i18n="archive.card4.kicker">生活观察</p>
+                  </div>
+                  <div>
+                    <h3 class="text-2xl font-semibold leading-tight sm:text-[2rem]" data-i18n="archive.card4.title">也留给那些并不宏大，却会一直跟着我的观察与感受。</h3>
+                    <p class="mt-4 max-w-xl text-base leading-8 text-[var(--muted)]" data-i18n="archive.card4.body">它们也许只是日常片段、短句、某一刻的感受，但如果被认真保留下来，也会慢慢变成你的网站最真实的质地。</p>
+                  </div>
+                </div>
+                <div class="archive-card__meta grid gap-3 sm:grid-cols-2">
+                  <div class="rounded-[1.4rem] border border-[var(--line)] bg-white/40 p-5">
+                    <p class="section-label" data-i18n="archive.card4.metaLabel1">可能形态</p>
+                    <p class="mt-3 text-base leading-7 text-[var(--text)]" data-i18n="archive.card4.metaValue1">短记 / 片段 / 日常观察集</p>
+                  </div>
+                  <div class="rounded-[1.4rem] border border-[var(--line)] bg-white/40 p-5">
+                    <p class="section-label" data-i18n="archive.card4.metaLabel2">当前状态</p>
+                    <p class="mt-3 text-base leading-7 text-[var(--text)]" data-i18n="archive.card4.metaValue2">这部分最轻，也最可能最早长出来</p>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+
+        <div class="archive-controls mt-6">
+          <div class="flex flex-wrap items-center gap-4">
+            <p class="text-sm leading-7 text-[var(--muted)]" data-i18n="archive.hint">可以滚动查看，也可以用下面两个按钮慢慢翻看这四个未来方向。</p>
+            <div class="archive-progress" aria-label="Archive progress">
+              <span class="archive-dot is-active" data-archive-dot></span>
+              <span class="archive-dot" data-archive-dot></span>
+              <span class="archive-dot" data-archive-dot></span>
+              <span class="archive-dot" data-archive-dot></span>
+            </div>
+          </div>
+          <div class="archive-nav">
+            <button type="button" aria-label="Previous archive card" data-archive-prev>←</button>
+            <button type="button" aria-label="Next archive card" data-archive-next>→</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" class="py-20 lg:py-24">
+        <div class="glass-panel rounded-[2rem] p-8 sm:p-10 lg:p-12">
+          <div class="grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
+            <div class="space-y-5">
+              <p class="section-label" data-i18n="contact.label">联系</p>
+              <h2 class="max-w-xl text-3xl font-semibold leading-tight sm:text-4xl" data-i18n="contact.title">如果你也愿意在这里多停一会儿，可以从这一页找到我。</h2>
+              <p class="max-w-lg text-base leading-8 text-[var(--muted)]" data-i18n="contact.body">
+                先留一个邮箱，两处小小的入口。其余的，就交给时间慢慢补上。
+              </p>
+            </div>
+
+            <div class="grid gap-4">
+              <a class="contact-card glass-panel rounded-[1.5rem] p-6" href="mailto:1042987944@qq.com">
+                <p class="text-sm uppercase tracking-[0.2em] text-[var(--muted)]" data-i18n="contact.email.label">邮箱</p>
+                <p class="mt-4 text-xl font-medium break-all">1042987944@qq.com</p>
+              </a>
+              <a class="contact-card glass-panel rounded-[1.5rem] p-6" href="https://github.com/zzin9797" target="_blank" rel="noreferrer">
+                <p class="text-sm uppercase tracking-[0.2em] text-[var(--muted)]" data-i18n="contact.github.label">GitHub</p>
+                <p class="mt-4 text-xl font-medium" data-i18n="contact.github.body">github.com/zzin9797</p>
+              </a>
+              <a class="contact-card glass-panel rounded-[1.5rem] p-6" href="https://xhslink.com/m/5eOxKTY2pQF" target="_blank" rel="noreferrer">
+                <p class="text-sm uppercase tracking-[0.2em] text-[var(--muted)]" data-i18n="contact.xhs.label">小红书</p>
+                <p class="mt-4 text-xl font-medium" data-i18n="contact.xhs.body">查看我的小红书</p>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="page-transition" aria-hidden="true" data-page-transition>
+    <div class="page-transition__panel">
+      <div class="page-transition__sheet">
+        <p class="page-transition__status" data-i18n="transition.status">正在翻页</p>
+        <div class="page-transition__divider"></div>
+        <p class="page-transition__label" data-page-transition-label>栏目</p>
+        <h2 class="page-transition__title" data-page-transition-title>这一篇，慢慢读。</h2>
+        <p class="page-transition__message" data-page-transition-message>请稍等，这一页正在展开。</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const translations = {
+      zh: {
+        "meta.title": "Zinin | 内容创作者",
+        "meta.description": "Zinin 的个人网站初版，记录写作表达、产品与网页、生活观察与正在形成中的作品。",
+        "nav.now": "此刻",
+        "nav.about": "关于",
+        "nav.works": "栏目",
+        "nav.contact": "联系",
+        "nav.cta": "联系我",
+        "hero.kicker": "Zinin / 把微风、光影与心事，留在页边",
+        "hero.title": "那些轻轻落下的事物，<span class=\"block italic text-[var(--accent)]\">慢慢长成我向外走去的痕迹。</span>",
+
+        "hero.button": "读一读我",
+        "hero.visual.label": "主视觉",
+        "hero.visual.badge": "已接入",
+        "hero.visual.frameLabel": "主视觉",
+        "hero.visual.frameTitle": "这里先留给以后会到来的主视觉。",
+        "hero.visual.frameHint": "关键词建议：留白、纸感、低饱和。",
+        "focus.label": "此刻",
+        "focus.title": "现在的我，更想<span class=\"italic text-[var(--accent)]\">一点点长出自己</span>。",
+        "focus.card1.label": "01 / 记录",
+        "focus.card1.body": "把那些还没有定型的片段，先认真留下来。",
+        "focus.card2.label": "02 / 学习",
+        "focus.card2.body": "把靠近新世界的过程，慢慢写成自己的路。",
+        "focus.card3.label": "03 / 观察",
+        "focus.card3.body": "在日常里辨认，什么会让我长久地看下去。",
+        "about.label": "关于",
+        "about.title": "关于我，是一个还在学习，也还在慢慢朝光里走的人。",
+        "about.versionA.label": "关于我",
+        "about.versionA.body": "我容易被细小的事物打动，也习惯把它们轻轻记下来。表达对我来说，不必一下子完整，它可以像页边的一笔风，也像夜里的一点光，先留下，再慢慢长成自己的样子。",
+        "about.versionB.label": "现在的我",
+        "about.versionB.body": "现在的我，正从零开始靠近 AI。想借这段路，看见世界的新变化，也看见自己一点点走出旧日的边界。",
+        "keywords.label": "关键词",
+        "keywords.1": "感性表达",
+        "keywords.2": "观察记录",
+        "keywords.3": "从零学 AI",
+        "keywords.4": "成长过程",
+        "keywords.5": "跳出原有圈子",
+        "keywords.6": "真实变化",
+        "approach.label": "我的方式",
+        "approach.1.label": "表达",
+        "approach.1.body": "不追求说得多漂亮，更在意那些真实发生过的感受有没有被认真留下来。",
+        "approach.2.label": "观察",
+        "approach.2.body": "喜欢从日常细节里感受人和世界，也愿意把这些细碎观察慢慢整理成文字。",
+        "approach.3.label": "学习",
+        "approach.3.body": "正在从零进入 AI 这个陌生领域，把学习过程本身也视作一种重要的成长记录。",
+        "approach.4.label": "变化",
+        "approach.4.body": "想慢慢跳出原有的封闭圈子，主动靠近更大的世界，也让自己变得更充实一些。",
+        "works.label": "栏目",
+        "works.title": "先把那些已经长出轮廓的内容，安静地留在这里。",
+        "works.intro": "现在先有三条线：收集、学习，还有成长。它们都还在路上，却已经开始有了自己的页、风声，与一点点缓慢亮起的光。",
+        "works.card1.placeholder": "AI 信息收集 / 首篇",
+        "works.card1.label": "AI 信息收集 / 首篇",
+        "works.card1.title": "《我想先把 AI 世界里不断出现的信息，慢慢整理成自己看得懂的线索》",
+        "works.card1.body": "把零散出现的工具、变化与资源，先收进一页可以回看的线索里。",
+        "works.card1.visualMeta": "信息线索",
+        "works.card1.visualTitle": "从屏幕、卡片与正在汇集的线索开始",
+        "works.card1.cta": "阅读全文 →",
+        "works.card2.placeholder": "我的学习过程与感受 / 第二篇",
+        "works.card2.label": "我的学习过程与感受 / 第二篇",
+        "works.card2.title": "《开始真的去用 AI 之后，我慢慢学着先把问题问清楚》",
+        "works.card2.body": "从好奇再往前一步，写下提问、停顿与慢慢靠近的过程。",
+        "works.card2.visualMeta": "学习感受",
+        "works.card2.visualTitle": "从好奇往前一步，开始真的去用",
+        "works.card2.cta": "继续读第二篇 →",
+        "works.card3.placeholder": "成长日志 / 首篇",
+        "works.card3.label": "成长日志 / 首篇",
+        "works.card3.title": "《我想慢慢走出原来的圈子，去看看更大的世界》",
+        "works.card3.body": "写下离开熟悉、慢慢向外走去时，心里那些细小的变化。",
+        "works.card3.cta": "阅读全文 →",
+        "works.card4.placeholder": "未来长文 / 预留",
+        "works.card4.label": "未来长文 / 预留",
+        "works.card4.title": "以后也许会写下更完整的长文",
+        "works.card4.body": "它可能关于学习、关于变化、关于人与世界的关系，也可能只是某个阶段被认真留下来的一次整理。",
+        "transition.status": "正在翻页",
+        "transition.defaultLabel": "栏目",
+        "transition.defaultTitle": "这一篇，慢慢读。",
+        "transition.defaultMessage": "请稍等，这一页正在展开。",
+        "transition.aiInfoMessage": "正在翻开这一页线索。",
+        "transition.learningMessage": "这一篇，慢慢读。",
+        "transition.growthMessage": "请稍等，这一页正在展开。",
+        "archive.label": "作品集预留",
+        "archive.title": "先把未来会留下来的作品，安放在一页更安静的留白里。",
+        "archive.intro": "这里还不是完成的作品集，更像一册刚刚起头的目录。先留白，等真正想留下来的内容，带着自己的风与光慢慢出现。",
+        "archive.preview.label": "未来档案",
+        "archive.preview.title": "不急着摆满，只先把方向安静地留出来。",
+        "archive.preview.body": "有些会变成专题，有些会变成长文，也有些，只会是某一阶段认真留下来的观察。",
+        "archive.preview.chip1": "专题项目",
+        "archive.preview.chip2": "学习实验",
+        "archive.preview.chip3": "长文记录",
+        "archive.preview.chip4": "生活观察",
+        "archive.card1.kicker": "专题项目",
+        "archive.card1.title": "以后也许会放那些真正被认真打磨过的主题作品。",
+        "archive.card1.body": "它们可能是一个完整专题、一组长期观察，或一次把想法、视觉与表达都整理得更清楚的内容计划。",
+        "archive.card1.metaLabel1": "可能形态",
+        "archive.card1.metaValue1": "专题页 / 系列内容 / 主题合集",
+        "archive.card1.metaLabel2": "当前状态",
+        "archive.card1.metaValue2": "先预留方向，等待真正值得留下的主题出现",
+        "archive.card2.kicker": "学习实验",
+        "archive.card2.title": "把正在学习的新东西，慢慢变成可回看的实验轨迹。",
+        "archive.card2.body": "尤其是 AI、网页或新的表达工具，它们未必要立刻成熟，但会慢慢成为我理解世界变化的记录。",
+        "archive.card2.metaLabel1": "可能形态",
+        "archive.card2.metaValue1": "实验笔记 / 小型原型 / 过程拆解",
+        "archive.card2.metaLabel2": "当前状态",
+        "archive.card2.metaValue2": "已经开始萌芽，之后会慢慢积累成更清楚的实验档案",
+        "archive.card3.kicker": "长文记录",
+        "archive.card3.title": "留给那些需要更长篇幅，才能慢慢说清楚的内容。",
+        "archive.card3.body": "有些想法不适合被写成一句话，它们更适合在更完整的结构里，被慢慢展开、反复推敲、认真留存。",
+        "archive.card3.metaLabel1": "可能形态",
+        "archive.card3.metaValue1": "个人长文 / 阶段总结 / 深度表达",
+        "archive.card3.metaLabel2": "当前状态",
+        "archive.card3.metaValue2": "先留下空位，等待以后真正想认真讲清楚的主题",
+        "archive.card4.kicker": "生活观察",
+        "archive.card4.title": "也留给那些并不宏大，却会一直跟着我的观察与感受。",
+        "archive.card4.body": "它们也许只是日常片段、短句、某一刻的感受，但如果被认真保留下来，也会慢慢变成你的网站最真实的质地。",
+        "archive.card4.metaLabel1": "可能形态",
+        "archive.card4.metaValue1": "短记 / 片段 / 日常观察集",
+        "archive.card4.metaLabel2": "当前状态",
+        "archive.card4.metaValue2": "这部分最轻，也最可能最早长出来",
+        "archive.hint": "可以滚动查看，也可以用下面两个按钮慢慢翻看这四个未来方向。",
+        "contact.label": "联系",
+        "contact.title": "如果你也愿意在这里多停一会儿，可以从这一页找到我。",
+        "contact.body": "先留一个邮箱，两处小小的入口。其余的，就交给时间慢慢补上。",
+        "contact.email.label": "邮箱",
+        "contact.github.label": "GitHub",
+        "contact.github.body": "github.com/zzin9797",
+        "contact.xhs.label": "小红书",
+        "contact.xhs.body": "查看我的小红书"
+      },
+      en: {
+        "meta.title": "Zinin | Content Creator",
+        "meta.description": "The first version of Zinin's personal site, gathering writing, observations, and works still taking shape.",
+        "nav.now": "Now",
+        "nav.about": "About",
+        "nav.works": "Columns",
+        "nav.contact": "Contact",
+        "nav.cta": "Reach Out",
+        "hero.kicker": "Zinin / Leaving weather, light, and small thoughts in the margins",
+        "hero.title": "The things that fall lightly <span class=\"block italic text-[var(--accent)]\">become the traces of how I move outward.</span>",
+        "hero.button": "Read a Little About Me",
+        "hero.visual.label": "Visual",
+        "hero.visual.badge": "In Place",
+        "hero.visual.frameLabel": "Visual",
+        "hero.visual.frameTitle": "A first image for what may arrive later.",
+        "hero.visual.frameHint": "Cue words: negative space, paper texture, muted tones.",
+        "focus.label": "Now",
+        "focus.title": "Right now, I mostly want to <span class=\"italic text-[var(--accent)]\">grow into myself</span>.",
+        "focus.card1.label": "01 / Notes",
+        "focus.card1.body": "I keep the fragments that have not fully settled yet.",
+        "focus.card2.label": "02 / Learning",
+        "focus.card2.body": "I let the path toward a wider world become part of my own writing.",
+        "focus.card3.label": "03 / Observation",
+        "focus.card3.body": "I keep noticing what I may want to stay with for a long time.",
+        "about.label": "About",
+        "about.title": "About someone still learning, and still slowly walking toward the light.",
+        "about.versionA.label": "About Me",
+        "about.versionA.body": "I am easily moved by small things, and I like leaving them gently in words. Expression does not need to arrive complete. Sometimes it is a little wind in the margin, sometimes a small light at night.",
+        "about.versionB.label": "Right Now",
+        "about.versionB.body": "Right now, I am moving toward AI from the beginning. I want to watch the world change, and feel myself slowly stepping beyond old edges.",
+        "keywords.label": "Keywords",
+        "keywords.1": "Emotional Expression",
+        "keywords.2": "Observation & Notes",
+        "keywords.3": "Learning AI from Zero",
+        "keywords.4": "Growth in Progress",
+        "keywords.5": "Stepping Beyond Old Circles",
+        "keywords.6": "Real Change",
+        "approach.label": "Approach",
+        "approach.1.label": "Expression",
+        "approach.1.body": "I care less about sounding polished, and more about whether real feelings have been honestly kept.",
+        "approach.2.label": "Observation",
+        "approach.2.body": "I like noticing people and the world through ordinary details, then slowly turning those fragments into words.",
+        "approach.3.label": "Learning",
+        "approach.3.body": "I am entering AI from scratch, and I see the learning process itself as an important record of growth.",
+        "approach.4.label": "Change",
+        "approach.4.body": "I want to step out of my old closed circle, move closer to a wider world, and keep becoming fuller along the way.",
+        "works.label": "Columns",
+        "works.title": "A quiet place for the pieces already beginning to gather a shape.",
+        "works.intro": "For now, there are three lines here: gathering, learning, and growth. None is finished, yet each has begun to find its own page, weather, and a little light.",
+        "works.card1.placeholder": "AI Information Gathering / First Entry",
+        "works.card1.label": "AI Information Gathering / First Entry",
+        "works.card1.title": "I want to slowly sort the constant flow of AI information into clues I can actually understand.",
+        "works.card1.body": "A page for the tools, signals, and changes I want to gather before they disappear again.",
+        "works.card1.visualMeta": "Information Clues",
+        "works.card1.visualTitle": "Beginning with screens, cards, and signals gathering into view",
+        "works.card1.cta": "Read the full entry →",
+        "works.card2.placeholder": "My Learning Process & Feelings / Second Entry",
+        "works.card2.label": "My Learning Process & Feelings / Second Entry",
+        "works.card2.title": "After I truly began using AI, I slowly learned to make my questions clearer first.",
+        "works.card2.body": "A step beyond curiosity, into questions, pauses, and the slow work of getting closer.",
+        "works.card2.visualMeta": "Learning Feelings",
+        "works.card2.visualTitle": "A step beyond curiosity, into actually using it",
+        "works.card2.cta": "Continue to the second entry →",
+        "works.card3.placeholder": "Growth Journal / First Entry",
+        "works.card3.label": "Growth Journal / First Entry",
+        "works.card3.title": "I want to step beyond my old circle and see a wider world.",
+        "works.card3.body": "A note on leaving what feels familiar, and listening to the small shifts that follow.",
+        "works.card3.cta": "Read the full entry →",
+        "works.card4.placeholder": "Future Essays / Reserved",
+        "works.card4.label": "Future Essays / Reserved",
+        "works.card4.title": "Perhaps longer essays will arrive here later",
+        "works.card4.body": "They may be about learning, change, or the relationship between people and the world — or simply a careful reflection on a phase worth keeping.",
+        "transition.status": "Opening Page",
+        "transition.defaultLabel": "Column",
+        "transition.defaultTitle": "Take this entry slowly.",
+        "transition.defaultMessage": "Please wait a moment while the page unfolds.",
+        "transition.aiInfoMessage": "Opening a page of clues.",
+        "transition.learningMessage": "Take this entry slowly.",
+        "transition.growthMessage": "Please wait a moment while the page unfolds.",
+        "archive.label": "Archive in Progress",
+        "archive.title": "A quieter page for the work I may one day keep.",
+        "archive.intro": "This is not a finished portfolio yet. It feels more like a table of contents just beginning, left open for what may arrive with its own weather and light.",
+        "archive.preview.label": "Future Archive",
+        "archive.preview.title": "Not filled all at once, only gently left open.",
+        "archive.preview.body": "Some pieces may become projects, some essays, and some simply careful observations from a certain season.",
+        "archive.preview.chip1": "Projects",
+        "archive.preview.chip2": "Experiments",
+        "archive.preview.chip3": "Essays",
+        "archive.preview.chip4": "Observations",
+        "archive.card1.kicker": "Projects",
+        "archive.card1.title": "One day, this may hold the pieces that have truly been shaped with care.",
+        "archive.card1.body": "They may become full themes, long observations, or content plans where thought, visual rhythm, and expression have all been brought into clearer form.",
+        "archive.card1.metaLabel1": "Possible Form",
+        "archive.card1.metaValue1": "Project Page / Series / Thematic Collection",
+        "archive.card1.metaLabel2": "Current State",
+        "archive.card1.metaValue2": "Reserved for the themes that will later prove worth keeping",
+        "archive.card2.kicker": "Experiments",
+        "archive.card2.title": "Turning what I am still learning into experiments I can return to later.",
+        "archive.card2.body": "Especially with AI, the web, or new creative tools, these pieces do not need to feel complete yet. They can simply become records of how I am learning to understand change.",
+        "archive.card2.metaLabel1": "Possible Form",
+        "archive.card2.metaValue1": "Experiment Notes / Small Prototypes / Process Breakdowns",
+        "archive.card2.metaLabel2": "Current State",
+        "archive.card2.metaValue2": "Already beginning to appear, and later may gather into a clearer archive of experiments",
+        "archive.card3.kicker": "Essays",
+        "archive.card3.title": "A place for the thoughts that need more room before they can be fully said.",
+        "archive.card3.body": "Some ideas do not belong in a single line. They need a fuller structure where they can be unfolded slowly, revised carefully, and left here with intention.",
+        "archive.card3.metaLabel1": "Possible Form",
+        "archive.card3.metaValue1": "Personal Essays / Phase Reflections / Longer Writing",
+        "archive.card3.metaLabel2": "Current State",
+        "archive.card3.metaValue2": "An empty space kept ready for the themes I will one day want to write through properly",
+        "archive.card4.kicker": "Observations",
+        "archive.card4.title": "And also for the smaller feelings and observations that continue to stay with me.",
+        "archive.card4.body": "They may be fragments, short notes, or passing feelings. Yet if they are kept with care, they may become some of the truest texture of this site.",
+        "archive.card4.metaLabel1": "Possible Form",
+        "archive.card4.metaValue1": "Short Notes / Fragments / Everyday Observation Sets",
+        "archive.card4.metaLabel2": "Current State",
+        "archive.card4.metaValue2": "The lightest part, and perhaps the first one most likely to grow",
+        "archive.hint": "You can scroll through this section, or use the two buttons below to move gently across the four future directions.",
+        "contact.label": "Contact",
+        "contact.title": "If you feel like lingering here a little longer, you can find me from this page.",
+        "contact.body": "For now, one email and two small doorways are enough. The rest can be left to time.",
+        "contact.email.label": "Email",
+        "contact.github.label": "GitHub",
+        "contact.github.body": "github.com/zzin9797",
+        "contact.xhs.label": "Xiaohongshu",
+        "contact.xhs.body": "Visit my Xiaohongshu"
+      }
+    };
+
+    const metaDescription = document.getElementById("meta-description");
+    const languageButtons = document.querySelectorAll("[data-lang-select]");
+    const pageTransition = document.querySelector("[data-page-transition]");
+    const pageTransitionLabel = document.querySelector("[data-page-transition-label]");
+    const pageTransitionTitle = document.querySelector("[data-page-transition-title]");
+    const pageTransitionMessage = document.querySelector("[data-page-transition-message]");
+    const workLinks = Array.from(document.querySelectorAll("[data-work-link]"));
+    const archiveReel = document.querySelector("[data-archive-reel]");
+    const archiveTrack = document.querySelector("[data-archive-track]");
+    const archiveCards = Array.from(document.querySelectorAll("[data-archive-card]"));
+    const archiveDots = Array.from(document.querySelectorAll("[data-archive-dot]"));
+    const archivePrevButton = document.querySelector("[data-archive-prev]");
+    const archiveNextButton = document.querySelector("[data-archive-next]");
+    let archiveIndex = 0;
+    let archiveIsAnimating = false;
+    let archiveReleaseTimer;
+    let archiveGestureLocked = false;
+    let archiveGestureUnlockTimer;
+    let archiveDriftResetTimer;
+    let currentLanguage = "zh";
+    let isPageTransitioning = false;
+
+    function getTransitionMessage(label, dictionary) {
+      if (label.includes("AI 信息收集") || label.includes("AI Information Gathering")) {
+        return dictionary["transition.aiInfoMessage"];
+      }
+
+      if (label.includes("我的学习过程与感受") || label.includes("My Learning Process & Feelings")) {
+        return dictionary["transition.learningMessage"];
+      }
+
+      if (label.includes("成长日志") || label.includes("Growth Journal")) {
+        return dictionary["transition.growthMessage"];
+      }
+
+      return dictionary["transition.defaultMessage"];
+    }
+
+    function playWorkTransition(link) {
+      if (!pageTransition || isPageTransitioning) {
+        window.location.href = link.href;
+        return;
+      }
+
+      const dictionary = translations[currentLanguage] || translations.zh;
+      const card = link.closest(".work-card");
+      const labelNode = card?.querySelector("[data-i18n$='.label']");
+      const titleNode = card?.querySelector("[data-i18n$='.title']");
+      const label = labelNode?.textContent?.trim() || dictionary["transition.defaultLabel"];
+      const title = titleNode?.textContent?.trim() || dictionary["transition.defaultTitle"];
+      const message = getTransitionMessage(label, dictionary);
+
+      isPageTransitioning = true;
+      pageTransition.setAttribute("aria-hidden", "false");
+      pageTransitionLabel.textContent = label;
+      pageTransitionTitle.textContent = title;
+      pageTransitionMessage.textContent = message;
+      card?.classList.add("is-transition-source");
+      document.body.classList.add("is-transitioning");
+
+      window.requestAnimationFrame(() => {
+        pageTransition.classList.add("is-visible");
+      });
+
+      window.setTimeout(() => {
+        window.location.href = link.href;
+      }, 920);
+    }
+
+    function setArchiveDrift(value) {
+      if (!archiveTrack) {
+        return;
+      }
+
+      archiveTrack.style.setProperty("--archive-drift", `${value}px`);
+    }
+
+    function resetArchiveDrift(delay = 0) {
+      window.clearTimeout(archiveDriftResetTimer);
+      archiveDriftResetTimer = window.setTimeout(() => {
+        setArchiveDrift(0);
+      }, delay);
+    }
+
+    function pulseArchiveInteraction() {
+      if (!archiveReel) {
+        return;
+      }
+
+      archiveReel.classList.add("is-animating");
+      window.clearTimeout(archiveReleaseTimer);
+      archiveReleaseTimer = window.setTimeout(() => {
+        archiveReel.classList.remove("is-animating");
+      }, 240);
+    }
+
+    function updateArchive(index) {
+      if (!archiveTrack || archiveCards.length === 0) {
+        return;
+      }
+
+      archiveIndex = (index + archiveCards.length) % archiveCards.length;
+      const prevIndex = (archiveIndex - 1 + archiveCards.length) % archiveCards.length;
+      const nextIndex = (archiveIndex + 1) % archiveCards.length;
+
+      archiveCards.forEach((card, currentIndex) => {
+        card.classList.remove("is-active", "is-prev", "is-next", "is-hidden");
+
+        if (currentIndex === archiveIndex) {
+          card.classList.add("is-active");
+          return;
+        }
+
+        if (currentIndex === prevIndex) {
+          card.classList.add("is-prev");
+          return;
+        }
+
+        if (currentIndex === nextIndex) {
+          card.classList.add("is-next");
+          return;
+        }
+
+        card.classList.add("is-hidden");
+      });
+
+      archiveDots.forEach((dot, currentIndex) => {
+        dot.classList.toggle("is-active", currentIndex === archiveIndex);
+      });
+    }
+
+    function queueArchive(index) {
+      if (archiveIsAnimating || archiveCards.length === 0) {
+        return;
+      }
+
+      archiveIsAnimating = true;
+      pulseArchiveInteraction();
+      updateArchive(index);
+      resetArchiveDrift(70);
+      window.setTimeout(() => {
+        archiveIsAnimating = false;
+      }, 540);
+    }
+
+    function setLanguage(lang) {
+      const dictionary = translations[lang] || translations.zh;
+      currentLanguage = lang;
+
+      document.documentElement.lang = lang === "en" ? "en" : "zh-CN";
+      document.title = dictionary["meta.title"];
+      metaDescription.setAttribute("content", dictionary["meta.description"]);
+
+      document.querySelectorAll("[data-i18n]").forEach((node) => {
+        const key = node.getAttribute("data-i18n");
+        if (dictionary[key]) {
+          node.textContent = dictionary[key];
+        }
+      });
+
+      document.querySelectorAll("[data-i18n-html]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-html");
+        if (dictionary[key]) {
+          node.innerHTML = dictionary[key];
+        }
+      });
+
+      languageButtons.forEach((button) => {
+        const isActive = button.getAttribute("data-lang-select") === lang;
+        button.classList.toggle("is-active", isActive);
+        button.setAttribute("aria-pressed", isActive ? "true" : "false");
+      });
+
+      localStorage.setItem("zinin-language", lang);
+    }
+
+    languageButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        setLanguage(button.getAttribute("data-lang-select"));
+      });
+    });
+
+    archivePrevButton?.addEventListener("click", () => {
+      queueArchive(archiveIndex - 1);
+    });
+
+    workLinks.forEach((link) => {
+      link.addEventListener("click", (event) => {
+        if (
+          event.defaultPrevented ||
+          event.metaKey ||
+          event.ctrlKey ||
+          event.shiftKey ||
+          event.altKey ||
+          link.target === "_blank"
+        ) {
+          return;
+        }
+
+        event.preventDefault();
+        playWorkTransition(link);
+      });
+    });
+
+    archiveNextButton?.addEventListener("click", () => {
+      queueArchive(archiveIndex + 1);
+    });
+
+    archiveReel?.addEventListener(
+      "wheel",
+      (event) => {
+        const absX = Math.abs(event.deltaX);
+        const absY = Math.abs(event.deltaY);
+        const horizontalIntent = absX > absY * 1.08 && absX > 6;
+        const verticalIntent = absY >= absX * 1.08 && absY > 14;
+
+        if (!horizontalIntent && !verticalIntent) {
+          return;
+        }
+
+        const driftSource = horizontalIntent ? event.deltaX : event.deltaY;
+        const clampedDrift = Math.max(-42, Math.min(42, driftSource * 0.45));
+        setArchiveDrift(clampedDrift);
+
+        if (archiveGestureLocked) {
+          event.preventDefault();
+          resetArchiveDrift(120);
+          return;
+        }
+
+        const turnThreshold = horizontalIntent ? 26 : 34;
+        if (Math.abs(driftSource) < turnThreshold) {
+          event.preventDefault();
+          resetArchiveDrift(110);
+          return;
+        }
+
+        event.preventDefault();
+        archiveGestureLocked = true;
+        window.clearTimeout(archiveGestureUnlockTimer);
+
+        if (horizontalIntent) {
+          queueArchive(archiveIndex + (event.deltaX > 0 ? 1 : -1));
+        } else {
+          queueArchive(archiveIndex + (event.deltaY > 0 ? 1 : -1));
+        }
+
+        archiveGestureUnlockTimer = window.setTimeout(() => {
+          archiveGestureLocked = false;
+        }, 430);
+      },
+      { passive: false }
+    );
+
+    const savedLanguage = localStorage.getItem("zinin-language");
+    const initialLanguage = savedLanguage || "zh";
+    setLanguage(initialLanguage);
+    updateArchive(0);
+
+    window.addEventListener("resize", () => updateArchive(archiveIndex));
+  </script>
+</body>
+</html>
